@@ -12,3 +12,8 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
+
+gem "haml-rails"
+gem "anjlab-bootstrap-rails", require: 'bootstrap-rails'
+gem "sass-rails"
+gem "coffee-rails"
