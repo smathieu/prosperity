@@ -17,5 +17,16 @@ module Prosperity
         subject.scope.should == User
       end
     end
+    
+    context "a metric missing the scope" do
+      subject do
+        Class.new(Metric) do 
+        end
+      end
+
+      it "raises an exception when accessing the scope" do
+        expect { subject.scope }.to raise_exception(MissingScope)
+      end
+    end
   end
 end

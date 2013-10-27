@@ -4,6 +4,7 @@ module Prosperity
       if block_given?
         @scope = block.call
       else
+        raise MissingScope.new if @scope.nil?
         @scope
       end
     end
