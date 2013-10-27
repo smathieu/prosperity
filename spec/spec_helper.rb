@@ -6,6 +6,8 @@ require 'rspec/autorun'
 
 require 'prosperity/exception'
 require 'prosperity/metric'
+require 'prosperity/period'
+require 'prosperity/data_extractor'
 
 Dir[File.join(__dir__, "support/**/*.rb")].each {|f| require f }
 
