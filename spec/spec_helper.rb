@@ -4,10 +4,10 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
-require 'prosperity/exception'
-require 'prosperity/metric'
-require 'prosperity/period'
-require 'prosperity/data_extractor'
+# require 'prosperity/exception'
+# require 'prosperity/metric'
+# require 'prosperity/period'
+# require 'prosperity/data_extractor'
 
 Dir[File.join(__dir__, "support/**/*.rb")].each {|f| require f }
 
