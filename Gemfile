@@ -21,3 +21,7 @@ gem "coffee-rails"
 group :development, :test do
   gem "rspec-rails"
 end
+
+group :development do
+  gem "lib-generator"
+end

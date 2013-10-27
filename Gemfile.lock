@@ -58,6 +58,7 @@ GEM
       railties (>= 3.1, < 4.1)
     hike (1.2.3)
     i18n (0.6.5)
+    lib-generator (0.0.1)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -124,6 +125,7 @@ DEPENDENCIES
   anjlab-bootstrap-rails
   coffee-rails
   haml-rails
+  lib-generator
   prosperity!
   rspec-rails
   sass-rails

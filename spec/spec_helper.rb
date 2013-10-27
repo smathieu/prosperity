@@ -4,6 +4,8 @@ require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+require 'prosperity/metric'
+
 Dir[File.join(__dir__, "support/**/*.rb")].each {|f| require f }
 
 RSpec.configure do |config|
