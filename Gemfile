@@ -17,6 +17,7 @@ gem "haml-rails"
 gem "anjlab-bootstrap-rails", require: 'bootstrap-rails'
 gem "sass-rails"
 gem "coffee-rails"
+gem "jquery-rails"
 
 group :development, :test do
   gem "rspec-rails"

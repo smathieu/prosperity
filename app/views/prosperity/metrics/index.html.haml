@@ -1,1 +1,5 @@
 %h1 Metrics
+
+- @metrics.each do |metric|
+  - data = data_for_metric(metric.new).inspect
+  %canvas.metric{id: "my_metric", width:"800", height:"400", data: {points: data}}

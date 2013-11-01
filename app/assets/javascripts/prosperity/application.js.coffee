@@ -10,6 +10,22 @@
 # Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 # about supported directives.
 #
-#= require_tree .
+#= require jquery
+#= require jquery_ujs
+#= require chart
 #= require twitter/bootstrap
+#= require_tree .
+
+$ ->
+  $("canvas.metric").each (i, el) ->
+    ctx = el.getContext("2d")
+    points = $(el).data('points')
+    data = 
+      labels : (i for i in [0..points.length])
+      
+      datasets: [
+        data: points
+      ]
+    myNewChart = new Chart(ctx).Line(data)
+    
 
