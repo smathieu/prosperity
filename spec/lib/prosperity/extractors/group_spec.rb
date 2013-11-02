@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 module Prosperity
-  describe DataExtractor do
+  describe Extractors::Group do
     let(:start_time) { 1.year.ago }
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
 
-    subject { DataExtractor.new(metric, start_time, end_time, period) }
+    subject { Extractors::Group.new(metric, start_time, end_time, period) }
 
     before do 
       User.delete_all
