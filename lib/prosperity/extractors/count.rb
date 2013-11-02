@@ -1,5 +1,9 @@
 module Prosperity
   class Extractors::Count < Extractors::Base
+    def key
+      "count"
+    end
+
     def to_a
       data = []
 

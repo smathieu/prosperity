@@ -3,5 +3,5 @@
 - @metrics.each do |metric|
   %h2= metric.to_s.underscore.humanize
 
-  - data = data_for_metric(metric.new).inspect
+  - data = data_for_metric(metric.new).to_json
   %canvas.metric{id: "my_metric", width:"800", height:"400", data: {points: data}}

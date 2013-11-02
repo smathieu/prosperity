@@ -20,12 +20,23 @@ $ ->
   $("canvas.metric").each (i, el) ->
     ctx = el.getContext("2d")
     points = $(el).data('points')
+
+    datasets = []
+
+    size = 0
+    for key, data of points
+      datasets.push
+        data: data
+        fillColor : "rgba(151,187,205,0)",
+        strokeColor : "rgba(0,0,0,1)",
+          
+
+      size = Math.max(size, data.length)
+        
     data = 
-      labels : (i for i in [0..points.length])
-      
-      datasets: [
-        data: points
-      ]
+      labels : (i for i in [0..size])
+      datasets: datasets
+
     myNewChart = new Chart(ctx).Line(data)
     
 

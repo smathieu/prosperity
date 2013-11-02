@@ -1,8 +1,11 @@
 module Prosperity
   module MetricsHelper
     def data_for_metric(metric)
-      ext = Extractors::Group.new(metric, 12.month.ago, Time.now, Prosperity::Periods::MONTH)
-      ext.to_a
+      metric.extractors.inject({}) do |h, ext_klass|
+        ext = ext_klass.new(metric, 12.month.ago, Time.now, Prosperity::Periods::MONTH)
+        h[ext.key] = ext.to_a
+        h
+      end
     end
   end
 end

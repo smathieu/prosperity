@@ -9,6 +9,10 @@ module Prosperity
       end
     end
 
+    def extractors
+      [Extractors::Group, Extractors::Count]
+    end
+
     def group_by
       :created_at
     end
