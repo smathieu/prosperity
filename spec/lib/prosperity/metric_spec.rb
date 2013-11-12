@@ -28,5 +28,22 @@ module Prosperity
         expect { subject.scope }.to raise_exception(MissingScope)
       end
     end
+
+    context "A simple scope metric with multiple options" do
+      subject do
+        Class.new(Metric) do 
+          scope { User }
+          options "active" do |scope|
+            scope.active
+          end
+        end.new
+      end
+
+      it "should have multiple options" do
+        subject.options.size.should == 2
+        subject.options['default'].should be_present
+        subject.options['active'].should be_present
+      end
+    end
   end
 end
