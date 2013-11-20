@@ -9,6 +9,16 @@ module Prosperity
     def self.all
       self.new(File.join(Rails.root, "app/prosperity")).metrics
     end
+
+    def self.find_by_name(name)
+      klass = name.constantize
+
+      if klass < Metric
+        klass
+      else
+        nil
+      end
+    end
   end
 end
 

@@ -1,7 +1,6 @@
 %h1 Metrics
 
-- @metrics.each do |metric|
-  %h2= metric.to_s.underscore.humanize
+%ul
+  - @metrics.each do |metric|
+    %li= link_to_metric metric
 
-  - data = data_for_metric(metric.new).to_json
-  %canvas.metric{id: "my_metric", width:"800", height:"400", data: {points: data}}

@@ -16,5 +16,12 @@ module Prosperity
         metrics.first.superclass.should == Metric
       end
     end
+
+    describe ".find_by_name" do
+      it "finds a metric by name" do
+        metric = described_class.find_by_name('UsersMetric')
+        metric.should be < Metric
+      end
+    end
   end
 end

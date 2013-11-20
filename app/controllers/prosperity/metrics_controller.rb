@@ -5,5 +5,9 @@ module Prosperity
     def index
       @metrics = MetricFinder.all
     end
+
+    def show
+      @metric = MetricFinder.find_by_name(params.fetch(:id))
+    end
   end
 end
