@@ -5,8 +5,10 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'pry-debugger'
 
-Dir[File.join(__dir__, "support/**/*.rb")].each {|f| require f }
-TEST_FILES = File.join(__dir__, "test_files")
+PROSPERITY_ROOT = File.expand_path("..", __FILE__)
+
+Dir[File.join(PROSPERITY_ROOT, "support/**/*.rb")].each {|f| require f }
+TEST_FILES = File.join(PROSPERITY_ROOT, "test_files")
 
 RSpec.configure do |config|
   config.render_views
