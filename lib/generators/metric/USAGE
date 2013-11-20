@@ -1,0 +1,8 @@
+Description:
+    Generates a new Prosperity metric for your application.
+
+Example:
+    rails generate metric User
+
+    This will create:
+      app/properity/user_metric.rb
