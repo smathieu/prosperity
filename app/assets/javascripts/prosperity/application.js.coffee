@@ -37,6 +37,9 @@ $ ->
       labels : (i for i in [0..size])
       datasets: datasets
 
-    myNewChart = new Chart(ctx).Line(data)
+    options = 
+      bezierCurve: false
+
+    myNewChart = new Chart(ctx).Line(data, options)
     
 
