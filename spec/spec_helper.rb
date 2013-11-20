@@ -9,6 +9,7 @@ Dir[File.join(__dir__, "support/**/*.rb")].each {|f| require f }
 TEST_FILES = File.join(__dir__, "test_files")
 
 RSpec.configure do |config|
+  config.render_views
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus

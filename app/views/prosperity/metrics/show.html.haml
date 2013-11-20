@@ -2,3 +2,9 @@
 
 - data = data_for_metric(@metric.new).to_json
 %canvas.metric{id: "my_metric", width:"800", height:"400", data: {points: data}}
+
+%h3 Options
+
+%ul
+  - @metric.options.each do |name, opt|
+    %li= link_to name, url_for(params.merge(option: name))

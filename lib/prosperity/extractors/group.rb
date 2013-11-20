@@ -5,7 +5,7 @@ module Prosperity
     end
 
     def to_a
-      s = @metric.scope.where("#{metric.group_by} BETWEEN ? AND ?", @start_time, @end_time)
+      s = scope.where("#{metric.group_by} BETWEEN ? AND ?", @start_time, @end_time)
       s = s.group("to_char(#{metric.group_by}, '#{period.db_strf_str}')").count
 
       data = []

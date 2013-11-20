@@ -6,7 +6,7 @@ module Prosperity
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
 
-    subject { Extractors::Group.new(metric, start_time, end_time, period) }
+    subject { Extractors::Group.new(metric, 'default', start_time, end_time, period) }
 
     before do 
       User.delete_all
@@ -16,7 +16,7 @@ module Prosperity
     end
 
     context "simple scope" do
-      let(:metric) { OpenStruct.new(scope: User, group_by: :created_at) }
+      let(:metric) { UsersMetric.new }
 
       describe "#to_a" do
         let(:data) { subject.to_a }
