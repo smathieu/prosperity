@@ -7,7 +7,7 @@ module Prosperity
     end
 
     def show
-      @metric = MetricFinder.find_by_name(params.fetch(:id))
+      @metric = MetricFinder.find_by_name(params.fetch(:id)).new
     end
   end
 end

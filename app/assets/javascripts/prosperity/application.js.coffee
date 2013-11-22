@@ -12,34 +12,32 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require chart
+#= require highcharts
 #= require twitter/bootstrap
 #= require_tree .
 
 $ ->
-  $("canvas.metric").each (i, el) ->
-    ctx = el.getContext("2d")
+  $(".metric").each (i, el) ->
+    $el = $(el)
     points = $(el).data('points')
 
-    datasets = []
+    series = []
 
-    size = 0
     for key, data of points
-      datasets.push
+      series.push
         data: data
-        fillColor : "rgba(151,187,205,0)",
-        strokeColor : "rgba(0,0,0,1)",
+        name: key
           
+    $el.highcharts
+      chart:
+        type: 'line'
+      series: series
+      yAxis: 
+        min: 0
+      title: 
+        text: $el.data('title'),
+        x: -20 
+      
 
-      size = Math.max(size, data.length)
-        
-    data = 
-      labels : (i for i in [0..size])
-      datasets: datasets
-
-    options = 
-      bezierCurve: false
-
-    myNewChart = new Chart(ctx).Line(data, options)
     
 

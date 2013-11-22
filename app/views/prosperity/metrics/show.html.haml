@@ -1,7 +1,7 @@
-%h1= @metric.to_s
+%h1= @metric.title
 
-- data = data_for_metric(@metric.new).to_json
-%canvas.metric{id: "my_metric", width:"800", height:"400", data: {points: data}}
+- data = data_for_metric(@metric).to_json
+.metric{id: "my_metric", width:"800", height:"400", data: {points: data, title: @metric.title}}
 
 %h3 Options
 

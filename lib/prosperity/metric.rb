@@ -35,6 +35,10 @@ module Prosperity
       self.class.options
     end
 
+    def title
+      self.class.to_s.gsub(/Metric$/, "").titleize
+    end
+
     private
 
     def self.default_options
