@@ -15,7 +15,7 @@ module Prosperity
       it "returns a metric" do
         get :show, id: 'UsersMetric'
         response.should be_success
-        assigns(:metric).should be < Metric
+        assigns(:metric).should be_a(Metric)
       end
     end
   end
