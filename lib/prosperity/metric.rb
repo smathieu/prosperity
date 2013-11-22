@@ -20,7 +20,7 @@ module Prosperity
     end
 
     def extractors
-      [Extractors::Group, Extractors::Count]
+      [Extractors::Group, Extractors::Count, Extractors::Change]
     end
 
     def group_by
