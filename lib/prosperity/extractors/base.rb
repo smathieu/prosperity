@@ -10,6 +10,10 @@ module Prosperity
     def scope
       @metric.options.fetch(option).block.call(metric.scope)
     end
+
+    def key
+      self.class.key
+    end
   end
 end
 

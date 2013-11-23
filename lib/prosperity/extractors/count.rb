@@ -1,6 +1,6 @@
 module Prosperity
   class Extractors::Count < Extractors::Base
-    def key
+    def self.key
       "count"
     end
 

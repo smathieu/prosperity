@@ -19,8 +19,15 @@ module Prosperity
       end
     end
 
+    def self.extractors
+      [Extractors::Group, Extractors::Count, Extractors::Change].inject({}) do |h, ext|
+        h[ext.key] = ext
+        h
+      end
+    end
+
     def extractors
-      [Extractors::Group, Extractors::Count, Extractors::Change]
+      self.class.extractors.values
     end
 
     def group_by
@@ -37,6 +44,10 @@ module Prosperity
 
     def title
       self.class.to_s.gsub(/Metric$/, "").titleize
+    end
+
+    def id
+      self.class.name
     end
 
     private

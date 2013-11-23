@@ -1,7 +1,7 @@
 %h1= @metric.title
 
-- data = data_for_metric(@metric).to_json
-.metric{id: "my_metric", width:"800", height:"400", data: {points: data, title: @metric.title}}
+- #data = data_for_metric(@metric).to_json
+.metric{data: {url: metric_path(@metric.id)}}
 
 %h3 Options
 

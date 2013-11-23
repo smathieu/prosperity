@@ -1,6 +1,6 @@
 module Prosperity
   class Extractors::Change < Extractors::Base
-    def key
+    def self.key
       'change'
     end
 

@@ -1,6 +1,6 @@
 module Prosperity
   class Extractors::Group < Extractors::Base
-    def key
+    def self.key
       "group"  
     end
 

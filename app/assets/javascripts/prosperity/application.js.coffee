@@ -19,25 +19,31 @@
 $ ->
   $(".metric").each (i, el) ->
     $el = $(el)
-    points = $(el).data('points')
+    url = $el.data('url')
 
-    series = []
-
-    for key, data of points
-      series.push
-        data: data
-        name: key
-          
-    $el.highcharts
+    highchartsOptions = 
       chart:
         type: 'line'
-      series: series
+      series: []
       yAxis: 
         min: 0
       title: 
-        text: $el.data('title'),
+        text: "Loading...",
         x: -20 
-      
 
-    
+    update = ->
+      $el.highcharts(highchartsOptions)
 
+    $.getJSON url, (json) ->
+      highchartsOptions.title.text = json.title
+
+      for extractor in json.extractors
+        $.get extractor.url, (json) ->
+          serie = 
+            data: json.data
+            name: json.key
+          highchartsOptions.series.push(serie)
+          update()
+
+      update()
+        
