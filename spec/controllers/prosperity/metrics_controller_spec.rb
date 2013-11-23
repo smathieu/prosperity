@@ -66,6 +66,12 @@ module Prosperity
         response.should be_success
         json['data'].should == [1,2,3]
       end
+
+      it "lets you specify the period" do
+        get :data, id: metric.id, period: 'week', format: 'json'
+        response.should be_success
+        json['data'].size.should be >= 52
+      end
     end
   end
 end

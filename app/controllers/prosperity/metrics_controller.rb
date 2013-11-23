@@ -21,7 +21,7 @@ module Prosperity
             extractors: @metric.extractors.map do |ext|
               {
                 key: ext.key,
-                url: data_metric_path(id: @metric.id, extractor: ext.key, option: option),
+                url: data_metric_path(id: @metric.id, extractor: ext.key, option: option, period: period),
               }
             end
           }
@@ -33,7 +33,8 @@ module Prosperity
       ext_klass = Metric.extractors[params.fetch(:extractor, "group")]
       end_time = Time.now
       start_time = end_time - 12.months
-      ext = ext_klass.new(@metric, option, start_time, end_time, Prosperity::Periods::MONTH)
+      p = Prosperity::Periods::ALL.fetch(period)
+      ext = ext_klass.new(@metric, option, start_time, end_time, p)
 
       json = {
         data: ext.to_a,
@@ -49,6 +50,10 @@ module Prosperity
 
     def option
       params.fetch(:option, 'default')
+    end
+
+    def period
+      params.fetch(:period, 'month')
     end
 
     helper_method :option
