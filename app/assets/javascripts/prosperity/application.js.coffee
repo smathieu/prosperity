@@ -24,6 +24,7 @@ $ ->
     highchartsOptions = 
       chart:
         type: 'line'
+        renderTo: el
       series: []
       yAxis: 
         min: 0
@@ -31,8 +32,7 @@ $ ->
         text: "Loading...",
         x: -20 
 
-    update = ->
-      $el.highcharts(highchartsOptions)
+    chart = new Highcharts.Chart(highchartsOptions)
 
     $.getJSON url, (json) ->
       highchartsOptions.title.text = json.title
@@ -42,8 +42,7 @@ $ ->
           serie = 
             data: json.data
             name: json.key
-          highchartsOptions.series.push(serie)
-          update()
+          
+          chart.addSeries(serie)
 
-      update()
         
