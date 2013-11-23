@@ -53,6 +53,19 @@ module Prosperity
         response.should be_success
         json['data'].should == [1,2,3]
       end
+
+      it "lets you specify the option parameter" do
+        Extractors::Group.any_instance.stub(to_a: [1,2,3])
+        Extractors::Group.should_receive(:new).with(anything,
+            'with_1',
+            anything,
+            anything,
+            anything).and_call_original
+
+        get :data, id: metric.id, option: 'with_1', format: 'json'
+        response.should be_success
+        json['data'].should == [1,2,3]
+      end
     end
   end
 end
