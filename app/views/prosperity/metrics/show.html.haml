@@ -14,3 +14,5 @@
 %ul
   - Prosperity::Periods::ALL.each do |key, period|
     %li= link_to key, url_for(params.merge(period: key))
+
+%a= link_to 'export', export_metric_url(params)
