@@ -8,7 +8,7 @@ Prosperity easily lets you add a dashboard of arbitrary time series data to your
 
 Add this line to your application's Gemfile:
 
-    gem 'lib-generator'
+    gem 'prosperity'
 
 And then execute:
 
