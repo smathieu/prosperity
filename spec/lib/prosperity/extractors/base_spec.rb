@@ -6,18 +6,28 @@ module Prosperity
     subject { Extractors::Change.new(metric, 'default', start_time, end_time, period) }
     let(:data) { subject.to_a }
 
+    let(:start_time) { Time.new(1981, 7, 10) }
+    let(:end_time) { Time.new(2012, 7, 10) }
+
     context "Month period" do
-      let(:start_time) { Time.new(1981, 7, 10) }
-      let(:end_time) { Time.new(2012, 7, 10) }
       let(:period) { Periods::MONTH }
 
-      it "changes the start time to 1981/07/01" do
-        subject.start_time.should == Time.new(1981, 7, 1)
-      end
+      it { subject.start_time.to_i.should == Time.new(1981, 7, 1).to_i }
+      it { subject.end_time.to_i.should == Time.new(2012, 7, 31, 23, 59, 59).to_i }
+    end
 
-      it "changes the end time to 2012/07/31" do
-        subject.start_time.should == Time.new(1981, 7, 1)
-      end
+    context "Week period" do
+      let(:period) { Periods::WEEK }
+
+      it { subject.start_time.to_i.should == Time.new(1981, 7, 6).to_i }
+      it { subject.end_time.to_i.should == Time.new(2012, 7, 15, 23, 59, 59).to_i }
+    end
+
+    context "Day period" do
+      let(:period) { Periods::DAY }
+
+      it { subject.start_time.to_i.should == Time.new(1981, 7, 10, 0, 0, 0).to_i }
+      it { subject.end_time.to_i.should == Time.new(2012, 7, 10, 23, 59, 59).to_i }
     end
   end
 end
