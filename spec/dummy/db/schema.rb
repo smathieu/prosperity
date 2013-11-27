@@ -11,10 +11,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131026214807) do
+ActiveRecord::Schema.define(version: 20131127042251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "prosperity_dashboard_views", force: true do |t|
+    t.integer  "view_id",      null: false
+    t.integer  "dashboard_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "prosperity_dashboard_views", ["dashboard_id"], name: "index_prosperity_dashboard_views_on_dashboard_id", using: :btree
+  add_index "prosperity_dashboard_views", ["view_id"], name: "index_prosperity_dashboard_views_on_view_id", using: :btree
+
+  create_table "prosperity_dashboards", force: true do |t|
+    t.string   "title",      null: false
+    t.boolean  "default",    null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "prosperity_metrics", force: true do |t|
+    t.integer  "view_id",    null: false
+    t.string   "name",       null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "prosperity_metrics", ["view_id"], name: "index_prosperity_metrics_on_view_id", using: :btree
+
+  create_table "prosperity_views", force: true do |t|
+    t.string   "period",     null: false
+    t.string   "option",     null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email"
