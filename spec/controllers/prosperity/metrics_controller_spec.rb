@@ -72,6 +72,12 @@ module Prosperity
         response.should be_success
         json['data'].size.should be >= 52
       end
+
+      it "lets you specify the date range" do
+        get :data, id: metric.id, period: 'week', start_time: Time.now.beginning_of_day, end_time: Time.now.end_of_day, format: 'json'
+        response.should be_success
+        json['data'].size.should be >= 1
+      end
     end
   end
 end

@@ -21,7 +21,7 @@ module Prosperity
     context "simple scope" do
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == 12  
+          data.size.should == 13
         end
 
         it "returns the counts at it increases" do
