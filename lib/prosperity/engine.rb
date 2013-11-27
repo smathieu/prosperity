@@ -5,5 +5,11 @@ module Prosperity
     config.after_initialize do
       require "prosperity/exception"
     end
+
+    config.generators do |g|
+      g.test_framework :rspec, :fixtures => false
+      g.view_specs false
+      g.fixture_replacement nil
+    end
   end
 end
