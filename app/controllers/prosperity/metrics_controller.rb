@@ -44,7 +44,10 @@ module Prosperity
       file = CSV.generate do |csv|
         csv << ['Date'] + @metric.extractors.map(&:key)
 
-        dates = Prosperity::Periods::ALL.fetch(period).to_a(Time.now, Time.now + 12.months)
+        dates = []
+        end_time = Time.now
+        start_time = end_time - 12.months
+        Prosperity::Periods::ALL.fetch(period).each_period(start_time, end_time) { |date| dates << date }
         extractor_data = @metric.extractors.map { |extractor_klass| get_extractor(extractor_klass).to_a }
 
         dates.each_with_index do |date, index|
