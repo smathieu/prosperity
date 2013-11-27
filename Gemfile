@@ -14,7 +14,6 @@ gemspec
 # gem 'debugger'
 
 gem "haml-rails"
-gem "anjlab-bootstrap-rails", require: 'bootstrap-rails'
 gem "sass-rails"
 gem "coffee-rails"
 gem "jquery-rails"

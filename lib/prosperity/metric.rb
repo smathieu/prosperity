@@ -9,14 +9,17 @@ module Prosperity
       end
     end
 
-    def self.options(name = nil, &block)
+    def self.option(name, &block)
       @options ||= default_options
       if block_given?
         @options[name] = Metrics::Option.new(name, &block)
       else
-        raise MissingScope.new if @options.nil?
-        @options
+        raise MissingScope.new 
       end
+    end
+
+    def self.options
+      @options ||= default_options
     end
 
     def self.extractors
