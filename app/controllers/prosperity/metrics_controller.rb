@@ -45,8 +45,6 @@ module Prosperity
         csv << ['Date'] + @metric.extractors.map(&:key)
 
         dates = []
-        end_time = Time.now
-        start_time = end_time - 12.months
         Prosperity::Periods::ALL.fetch(period).each_period(start_time, end_time) { |date| dates << date }
         extractor_data = @metric.extractors.map { |extractor_klass| get_extractor(extractor_klass).to_a }
 
@@ -65,9 +63,22 @@ module Prosperity
 
     private
 
+    def memoize_times
+      @end_time ||= params[:end_time].present? ? Time.parse(params[:end_time].to_s) : Time.now
+      @start_time ||= params[:start_time].present? ? Time.parse(params[:start_time].to_s) : @end_time - 12.months
+    end
+
+    def start_time
+      memoize_times
+      @start_time
+    end
+
+    def end_time
+      memoize_times
+      @end_time
+    end
+
     def get_extractor(ext_klass)
-      end_time = params[:end_time].present? ? Time.parse(params[:end_time].to_s) : Time.now
-      start_time = params[:start_time].present? ? Time.parse(params[:start_time].to_s) : end_time - 12.months
       p = Prosperity::Periods::ALL.fetch(period)
       ext_klass.new(@metric, option, start_time, end_time, p)
     end
