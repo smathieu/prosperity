@@ -22,7 +22,7 @@ module Prosperity
         let(:data) { subject.to_a }
 
         it "returns the one entry per period" do
-          data.size.should == 12  
+          data.size.should == 13
         end
 
         it "only returns models from that period" do

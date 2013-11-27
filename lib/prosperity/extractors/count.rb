@@ -15,4 +15,3 @@ module Prosperity
     end
   end
 end
-

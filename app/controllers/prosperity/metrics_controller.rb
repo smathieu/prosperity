@@ -22,7 +22,7 @@ module Prosperity
             extractors: @metric.extractors.map do |ext|
               {
                 key: ext.key,
-                url: data_metric_path(id: @metric.id, extractor: ext.key, option: option, period: period),
+                url: data_metric_path(id: @metric.id, extractor: ext.key, option: option, period: period, start_time: params[:start_time], end_time: params[:end_time]),
               }
             end
           }
@@ -66,8 +66,8 @@ module Prosperity
     private
 
     def get_extractor(ext_klass)
-      end_time = Time.now
-      start_time = end_time - 12.months
+      end_time = params[:end_time].present? ? Time.parse(params[:end_time].to_s) : Time.now
+      start_time = params[:start_time].present? ? Time.parse(params[:start_time].to_s) : end_time - 12.months
       p = Prosperity::Periods::ALL.fetch(period)
       ext_klass.new(@metric, option, start_time, end_time, p)
     end
