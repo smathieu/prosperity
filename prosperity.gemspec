@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/smathieu/prosperity"
   s.summary     = "Prosperity easily lets you add a dashboard of arbitrary time series data to your rails app."
   s.description = s.summary
+  s.license     = 'MIT'
 
   s.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["spec/**/*"]
