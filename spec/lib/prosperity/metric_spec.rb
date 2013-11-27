@@ -33,7 +33,7 @@ module Prosperity
       subject do
         Class.new(Metric) do 
           scope { User }
-          options "active" do |scope|
+          option "active" do |scope|
             scope.active
           end
         end.new

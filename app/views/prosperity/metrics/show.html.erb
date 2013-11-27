@@ -1,0 +1,20 @@
+<h1>
+  <%= @metric.title %>
+</h1>
+<div class="metric" data-url="<%= url_for(params) %>"></div>
+<h3>Options</h3>
+<ul>
+  <% @metric.options.each do |name, opt| %>
+    <li>
+      <%= link_to name, url_for(params.merge(option: name)) %>
+    </li>
+  <% end %>
+</ul>
+<h3>Period</h3>
+<ul>
+  <% Prosperity::Periods::ALL.each do |key, period| %>
+    <li>
+      <%= link_to key, url_for(params.merge(period: key)) %>
+    </li>
+  <% end %>
+</ul>
