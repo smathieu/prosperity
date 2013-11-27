@@ -8,31 +8,41 @@ Prosperity easily lets you add a dashboard of arbitrary time series data to your
 
 Add this line to your application's Gemfile:
 
-    gem 'prosperity'
+```
+gem 'prosperity'
+```
 
 And then execute:
 
-    $ bundle
+```bash
+$ bundle
+```
 
-Add a route to prosperity.
+Add a route to prosperity in ```config/routes.rb```.
 
-    mount Prosperity::Engine => "/prosperity"
+```ruby
+mount Prosperity::Engine => "/prosperity"
+```
 
 You can then generate your first metric.
 
-    rails g metric User    
+```bash
+$ rails g metric User
+```
 
 This will generate app/prosperity/user_metric.rb
 
 You can add custom scopes like so:
 
-    class UsersMetric < Prosperity::Metric
-      scope { User }
-    
-      options 'active' do |scope|
-        scope.where(state: 'active')
-      end
-    end
+```ruby
+class UsersMetric < Prosperity::Metric
+  scope { User }
+
+  options 'active' do |scope|
+    scope.where(state: 'active')
+  end
+end
+```
 
 ## License
 
@@ -43,5 +53,6 @@ This project rocks and uses MIT-LICENSE.
 - Better Docs
 - Select data range
 - Export data to CSV
+- SQL support
 - Graph % change since last value
 - Dashboard
