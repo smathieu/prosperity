@@ -79,5 +79,15 @@ module Prosperity
         json['data'].size.should be >= 1
       end
     end
+
+    describe "GET export" do
+      it "returns a csv file" do
+        Extractors::Group.any_instance.stub(to_a: [1,2,3])
+
+        get :export, id: metric.id
+        response.should be_success
+        response.body.should =~ /Date/
+      end
+    end
   end
 end
