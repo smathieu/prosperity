@@ -38,23 +38,23 @@ $ ->
 
     chart = new Highcharts.Chart(highchartsOptions)
 
-    get_series = (url, axis_index) =>
+    getSeries = (url, axisIndex) =>
       $.get url, (json) =>
         serie = 
           data: json.data
           name: json.key
-          yAxis: axis_index
+          yAxis: axisIndex
           pointStart: Date.parse(json.ts_start)
           pointInterval: json.ts_interval
 
-        axis_settings = 
+        axisSettings = 
           title: {text: json.key}
           min: Math.min.apply(Math, json.data)
           max: Math.max.apply(Math, json.data)
       
 
         if json.key == 'change'
-          axis_settings = $.extend axis_settings, {
+          axisSettings = $.extend axisSettings, {
             min: 0,
             max: Math.max.apply(Math, json.data),
             labels: {formatter: -> this.value + '%' },
@@ -65,12 +65,12 @@ $ ->
             tooltip: {valueDecimals: 2, valueSuffix: '%'}
           }
 
-        chart.yAxis[axis_index].update(axis_settings)
+        chart.yAxis[axisIndex].update(axisSettings)
         chart.addSeries(serie)
 
     $.getJSON url, (json) ->
       chart.setTitle {text: json.title}
 
       for extractor, index in json.extractors
-        get_series(extractor.url, index)
+        getSeries(extractor.url, index)
         
