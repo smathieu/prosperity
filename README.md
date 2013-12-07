@@ -46,11 +46,11 @@ end
 
 ## Development
 
-To get started with a development environment with (pow)[http://pow.cx], follow these instructions;
+To get started with a development environment with [pow](http://pow.cx/), follow these instructions;
 
 ```bash
 git clone https://github.com/smathieu/prosperity.git
-ln -s prosperity/spec/dummy ~/.pow/prosperity
+ln -s `pwd`/prosperity/spec/dummy ~/.pow/prosperity
 cd prosperity
 bundle
 rake db:create db:migrate RAILS_ENV=test
