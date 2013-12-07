@@ -42,7 +42,7 @@ module Prosperity
         data: ext.to_a,
         key: ext.key,
         start_time: start_time.iso8601,
-        period_milliseconds: 1.send(period).to_i * 1000
+        period_milliseconds: p.duration * 1000
       }
       render json: json
     end
