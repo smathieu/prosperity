@@ -9,7 +9,6 @@ module Prosperity
     subject { Extractors::Change.new(metric, 'default', start_time, end_time, period) }
 
     let(:data) { subject.to_a }
-    let(:metric) { UsersMetric.new }
 
     before do 
       User.delete_all
@@ -19,6 +18,24 @@ module Prosperity
     end
 
     context "simple scope" do
+      let(:metric) { UsersMetric.new }
+
+      describe "#to_a" do
+        it "returns the one entry per period" do
+          data.size.should == 13
+        end
+
+        it "the value shows the percentage change since the last period" do
+          data[6].should == 0.0
+          data[-2].should == 100.0
+          data[-1].should == 50.0
+        end
+      end
+    end
+
+    context "simple sql fragment" do
+      let(:metric) { UsersSqlMetric.new }
+
       describe "#to_a" do
         it "returns the one entry per period" do
           data.size.should == 13

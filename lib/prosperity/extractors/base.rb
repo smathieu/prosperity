@@ -14,5 +14,16 @@ module Prosperity
     def key
       self.class.key
     end
+
+    private
+    def sql_fragment_to_count_up_to_date(date)
+      <<-SQL
+        WITH metric_count AS (
+          #{metric.sql}
+        )
+        SELECT COUNT(1) FROM metric_count
+        WHERE #{metric.group_by} < '#{date.iso8601}'
+      SQL
+    end
   end
 end
