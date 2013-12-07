@@ -1,0 +1,12 @@
+<h1>New Graph</h1>
+
+<%= form_for @graph, html: {role: 'form'} do |f| %>
+  <% [:title, :period, :option].each do |attr| %>
+    <div class="form-group">
+      <%= f.label attr %>
+      <%= f.text_field attr %>
+    </div>
+  <% end %>
+
+  <%= f.submit "Save", class: 'btn btn-success' %>
+<% end %>

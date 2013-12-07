@@ -1,0 +1,49 @@
+require 'spec_helper'
+
+module Prosperity
+  describe GraphsController do
+    routes { Prosperity::Engine.routes }
+    let(:valid_attributes) do
+      {
+        title: "My Graph",
+        period: "month",
+        option: "default",
+      }
+    end
+
+    let(:invalid_attributes) do
+      {}
+    end
+
+    describe "GET 'new'" do
+      it "returns http success" do
+        get 'new'
+        response.should be_success
+        assigns(:graph).should be_a(Graph)
+      end
+    end
+
+    describe "GET 'edit'" do
+      xit "returns http success" do
+        get 'edit'
+        response.should be_success
+      end
+    end
+
+    describe "POST create" do
+      it "should create a new graph with the correct attributes" do
+        expect do 
+          post :create, graph: valid_attributes
+        end.to change(Graph, :count).by(1)
+        graph = assigns(:graph)
+        response.should redirect_to(edit_graph_path(graph))
+      end
+
+      it "handles invalid attributes" do
+        post :create, graph: invalid_attributes
+        response.should be_success
+        flash[:error].should be_present
+      end
+    end
+  end
+end

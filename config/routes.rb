@@ -6,5 +6,7 @@ Prosperity::Engine.routes.draw do
     end
   end
 
+  resources :graphs, only: [:new, :edit, :create, :update]
+
   root to: 'metrics#index'
 end

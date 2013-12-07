@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 module Prosperity
-  describe DashboardGraph do
+  describe GraphHelper do
   end
 end
