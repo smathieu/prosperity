@@ -2,19 +2,22 @@ require 'spec_helper'
 
 module Prosperity
   describe DashboardsController do
+    let!(:dashboard) { Dashboard.create! title: "My Dashboard", default: false }
     routes { Prosperity::Engine.routes }
 
     describe "GET 'index'" do
       it "returns http success" do
         get 'index'
         response.should be_success
+        assigns(:dashboards).should be_present
       end
     end
 
     describe "GET 'edit'" do
       it "returns http success" do
-        get 'edit', id: '1'
+        get 'edit', id: dashboard.id
         response.should be_success
+        assigns(:dashboard).should == dashboard
       end
     end
 

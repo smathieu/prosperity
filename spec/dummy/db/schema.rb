@@ -16,15 +16,15 @@ ActiveRecord::Schema.define(version: 20131127042251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "prosperity_dashboard_views", force: true do |t|
-    t.integer  "view_id",      null: false
+  create_table "prosperity_dashboard_graphs", force: true do |t|
+    t.integer  "graph_id",     null: false
     t.integer  "dashboard_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "prosperity_dashboard_views", ["dashboard_id"], name: "index_prosperity_dashboard_views_on_dashboard_id", using: :btree
-  add_index "prosperity_dashboard_views", ["view_id"], name: "index_prosperity_dashboard_views_on_view_id", using: :btree
+  add_index "prosperity_dashboard_graphs", ["dashboard_id"], name: "index_prosperity_dashboard_graphs_on_dashboard_id", using: :btree
+  add_index "prosperity_dashboard_graphs", ["graph_id"], name: "index_prosperity_dashboard_graphs_on_graph_id", using: :btree
 
   create_table "prosperity_dashboards", force: true do |t|
     t.string   "title",      null: false
@@ -33,16 +33,18 @@ ActiveRecord::Schema.define(version: 20131127042251) do
     t.datetime "updated_at"
   end
 
-  create_table "prosperity_metrics", force: true do |t|
-    t.integer  "view_id",    null: false
-    t.string   "name",       null: false
+  create_table "prosperity_graph_lines", force: true do |t|
+    t.integer  "graph_id",   null: false
+    t.string   "option",     null: false
+    t.string   "metric",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "prosperity_metrics", ["view_id"], name: "index_prosperity_metrics_on_view_id", using: :btree
+  add_index "prosperity_graph_lines", ["graph_id"], name: "index_prosperity_graph_lines_on_graph_id", using: :btree
 
-  create_table "prosperity_views", force: true do |t|
+  create_table "prosperity_graphs", force: true do |t|
+    t.string   "title",      null: false
     t.string   "period",     null: false
     t.string   "option",     null: false
     t.datetime "created_at"

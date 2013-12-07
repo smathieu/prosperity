@@ -1,7 +1,7 @@
 module Prosperity
   class Dashboard < ActiveRecord::Base
-    has_many :dashboad_views
-    has_many :views, through: :dashboad_views
+    has_many :dashboard_graphs
+    has_many :graphs, through: :dashboard_graphs
 
     validates_presence_of :title
   end

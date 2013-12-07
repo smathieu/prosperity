@@ -3,6 +3,7 @@ require_dependency "prosperity/application_controller"
 module Prosperity
   class DashboardsController < ApplicationController
     def index
+      @dashboards = Dashboard.scoped
     end
 
     def new
@@ -10,6 +11,7 @@ module Prosperity
     end
 
     def edit
+      @dashboard = Dashboard.find(params[:id])
     end
 
     def create
