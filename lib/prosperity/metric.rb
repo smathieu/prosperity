@@ -45,7 +45,7 @@ module Prosperity
     end
 
     def self.sql?
-      !@sql.nil?
+      @sql.present?
     end
 
     def extractors

@@ -7,11 +7,11 @@ module Prosperity
     def to_a
       if metric.sql?
         fragment = <<-SQL
-          WITH metric_count AS (
+          WITH prosperity_metric_count AS (
             #{metric.sql}
           )
-          SELECT to_char(#{metric.group_by}, 'YYYY-MM') AS bucket, COUNT(1)
-          FROM metric_count
+          SELECT to_char(#{metric.group_by}, '#{period.db_strf_str}') AS bucket, COUNT(1)
+          FROM prosperity_metric_count
           WHERE (#{metric.group_by} BETWEEN '#{@start_time.iso8601}' AND '#{@end_time.iso8601}')
           GROUP BY bucket
         SQL

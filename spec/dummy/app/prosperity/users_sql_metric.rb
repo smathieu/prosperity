@@ -1,4 +1,4 @@
 class UsersSqlMetric < Prosperity::Metric
-  sql "SELECT * from users"
+  sql "SELECT * FROM users"
 end
 
