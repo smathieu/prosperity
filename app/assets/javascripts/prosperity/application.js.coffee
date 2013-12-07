@@ -16,6 +16,7 @@
 #= require_tree .
 
 $ ->
+
   $(".metric").each (i, el) ->
     $el = $(el)
     url = $el.data('url')
@@ -24,24 +25,52 @@ $ ->
       chart:
         type: 'line'
         renderTo: el
+      tooltip:
+        crosshairs: [true, true]
       series: []
-      yAxis: 
-        min: 0
+      xAxis: 
+        type: 'datetime'
+        dateTimeLabelFormats:
+          day: '%e of %b'
+      yAxis: [{}, {}, {}]
       title: 
-        text: "Loading...",
-        x: -20 
+        text: "Loading..."
 
     chart = new Highcharts.Chart(highchartsOptions)
 
+    get_series = (url, axis_index) =>
+      $.get url, (json) =>
+        serie = 
+          data: json.data
+          name: json.key
+          yAxis: axis_index
+          pointStart: Date.parse(json.ts_start)
+          pointInterval: json.ts_interval
+
+        axis_settings = 
+          title: {text: json.key}
+          min: Math.min.apply(Math, json.data)
+          max: Math.max.apply(Math, json.data)
+      
+
+        if json.key == 'change'
+          axis_settings = $.extend axis_settings, {
+            min: 0,
+            max: Math.max.apply(Math, json.data),
+            labels: {formatter: -> this.value + '%' },
+            opposite: true
+          }
+
+          serie = $.extend serie, {
+            tooltip: {valueDecimals: 2, valueSuffix: '%'}
+          }
+
+        chart.yAxis[axis_index].update(axis_settings)
+        chart.addSeries(serie)
+
     $.getJSON url, (json) ->
-      highchartsOptions.title.text = json.title
+      chart.setTitle {text: json.title}
 
-      for extractor in json.extractors
-        $.get extractor.url, (json) ->
-          serie = 
-            data: json.data
-            name: json.key
-          
-          chart.addSeries(serie)
-
+      for extractor, index in json.extractors
+        get_series(extractor.url, index)
         
