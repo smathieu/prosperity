@@ -1,6 +1,7 @@
 language: ruby
+before_install:
+  - gem install bundler
 before_script:
-  - "gem query --local | grep bundler >/dev/null || gem install bundler"
   - "rake db:create db:migrate RAILS_ENV=test"
 rvm:
   - "2.0.0"
