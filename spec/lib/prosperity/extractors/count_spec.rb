@@ -6,8 +6,6 @@ module Prosperity
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
 
-    subject { Extractors::Count.new(metric, 'default', start_time, end_time, period) }
-
     let(:data) { subject.to_a }
     let(:metric) { UsersMetric.new }
 
@@ -19,6 +17,22 @@ module Prosperity
     end
 
     context "simple scope" do
+      subject { Extractors::Count.new(metric, 'default', start_time, end_time, period) }
+      describe "#to_a" do
+        it "returns the one entry per period" do
+          data.size.should == 13
+        end
+
+        it "returns the counts at it increases" do
+          data[0].should == 1
+          data[-1].should == 2
+        end
+      end
+    end
+
+    context "simple sql fragment" do
+      subject { Extractors::Count.new(UsersSqlMetric.new, 'default', start_time, end_time, period) }
+
       describe "#to_a" do
         it "returns the one entry per period" do
           data.size.should == 13

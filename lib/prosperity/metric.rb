@@ -9,7 +9,22 @@ module Prosperity
       end
     end
 
+    def self.sql(fragment = nil, &block)
+      if fragment && block_given?
+        raise ArgumentError, "Must pass string or block but not both"
+      elsif fragment
+        @sql = fragment
+      elsif block_given?
+        @sql = block.call
+      elsif @sql.nil?
+        raise MissingSql.new
+      else
+        @sql
+      end
+    end
+
     def self.option(name, &block)
+      raise SqlMetricCannotHaveOption.new unless @sql.nil?
       @options ||= default_options
       if block_given?
         @options[name] = Metrics::Option.new(name, &block)
@@ -29,6 +44,10 @@ module Prosperity
       end
     end
 
+    def self.sql?
+      @sql.present?
+    end
+
     def extractors
       self.class.extractors.values
     end
@@ -41,6 +60,10 @@ module Prosperity
       self.class.scope
     end
 
+    def sql
+      self.class.sql
+    end
+
     def options
       self.class.options
     end
@@ -51,6 +74,10 @@ module Prosperity
 
     def id
       self.class.name
+    end
+
+    def sql?
+      self.class.sql?
     end
 
     private

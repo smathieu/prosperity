@@ -8,7 +8,11 @@ module Prosperity
       data = []
 
       period.each_period(start_time, end_time) do |start_time|
-        data << scope.where("#{metric.group_by} < ?", start_time).count
+        if metric.sql?
+          data << count_up_to_date_with_sql(start_time)
+        else
+          data << scope.where("#{metric.group_by} < ?", start_time).count
+        end
       end
 
       data
