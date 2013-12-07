@@ -53,8 +53,8 @@ module Prosperity
         response.should be_success
         json['data'].should == [1,2,3]
         json['key'].should == 'count'
-        DateTime.parse(json['ts_start']).to_i.should == 1.year.ago.to_i
-        json['ts_interval'].should == 1.month.to_i * 1000
+        DateTime.parse(json['start_time']).to_i.should == 1.year.ago.to_i
+        json['period_milliseconds'].should == 1.month.to_i * 1000
       end
 
       it "lets you specify the option parameter" do

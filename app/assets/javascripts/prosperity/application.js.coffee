@@ -44,8 +44,8 @@ $ ->
           data: json.data
           name: json.key
           yAxis: axisIndex
-          pointStart: Date.parse(json.ts_start)
-          pointInterval: json.ts_interval
+          pointStart: Date.parse(json.start_time)
+          pointInterval: json.period_milliseconds
 
         axisSettings = 
           title: {text: json.key}
