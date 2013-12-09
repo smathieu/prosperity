@@ -16,7 +16,6 @@ class Dashboards < ActiveRecord::Migration
     create_table :prosperity_graphs do |t|
       t.string :title, null: false
       t.string :period, null: false
-      t.string :option, null: false
       t.timestamps
     end
 

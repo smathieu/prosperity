@@ -3,17 +3,19 @@ require 'spec_helper'
 module Prosperity
   describe GraphsController do
     routes { Prosperity::Engine.routes }
+
     let(:valid_attributes) do
       {
         title: "My Graph",
         period: "month",
-        option: "default",
       }
     end
 
     let(:invalid_attributes) do
       {}
     end
+
+    let(:graph) { Graph.create!(valid_attributes) }
 
     describe "GET 'new'" do
       it "returns http success" do
@@ -24,9 +26,10 @@ module Prosperity
     end
 
     describe "GET 'edit'" do
-      xit "returns http success" do
-        get 'edit'
+      it "returns http success" do
+        get 'edit', id: graph.id
         response.should be_success
+        assigns(:graph).should == graph
       end
     end
 

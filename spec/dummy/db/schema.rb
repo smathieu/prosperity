@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20131127042251) do
   create_table "prosperity_graphs", force: true do |t|
     t.string   "title",      null: false
     t.string   "period",     null: false
-    t.string   "option",     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
