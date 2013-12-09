@@ -12,7 +12,7 @@ module Prosperity
     end
 
     let(:invalid_attributes) do
-      {}
+      {graph: {}}
     end
 
     let(:graph) { Graph.create!(valid_attributes) }
@@ -46,6 +46,25 @@ module Prosperity
         post :create, graph: invalid_attributes
         response.should be_success
         flash[:error].should be_present
+      end
+    end
+
+    describe "PUT update" do 
+      let(:update_attrs) do
+        {
+          "graph_lines_attributes" => {
+            "0" => {
+              "option" => "My option", 
+              "metric" => "lol"
+            }
+          }
+        }
+      end
+
+      it "Add the graph line" do
+        put :update, id: graph.id, graph: update_attrs
+        response.should be_redirect
+        graph.graph_lines.size.should == 1
       end
     end
   end
