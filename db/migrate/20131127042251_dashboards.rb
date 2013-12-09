@@ -26,7 +26,7 @@ class Dashboards < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :prosperity_dashboard_graphs, :graph_id
+    add_index :prosperity_dashboard_graphs, [:graph_id, :dashboard_id], unique: true
     add_index :prosperity_dashboard_graphs, :dashboard_id
     add_index :prosperity_graph_lines, :graph_id
   end

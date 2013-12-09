@@ -1,6 +1,20 @@
 <h1>Edit Dashboard</h1>
 
-<p>
-</p>
+<ul>
+  <% @dashboard.graphs.each do |graph| %>
+    <li>
+      <%= graph.title %>
+    </li>
+  <% end %>
+</ul>
 
-<%= link_to "Add Graph", new_graph_path, class: 'btn btn-primary' %>
+<%= form_tag({}, class: "link-graph", method: "POST") do %>
+  <%= hidden_field_tag :dashboard_id, @dashboard.id %>
+  <%= hidden_field_tag :url_template, dashboard_dashboard_graphs_path(dashboard_id: 'dashboard_id', graph_id: 'graph_id') %>
+  <%= select_tag :graph_id, options_from_collection_for_select(Prosperity::Graph.all, :id, :title) %>
+  <%= submit_tag "Add To Dashboard", class: 'btn btn-success' %>
+<% end %>
+
+OR 
+
+<%= link_to "Add New Graph", new_graph_path, class: 'btn btn-primary' %>
