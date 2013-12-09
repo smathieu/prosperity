@@ -16,6 +16,11 @@
           <%= l.label :metric %>
           <%= l.text_field :metric %>
         </div>
+
+        <div class="form-group">
+          <%= l.label :extractor %>
+          <%= l.text_field :extractor %>
+        </div>
       <% end %>
       <%= f.submit "Save", class: "btn btn-success" %>
     <% end %>
@@ -23,6 +28,7 @@
 
   <div class="span8">
     <div class="graph"/>
+      <div class="metric" data-url="<%= graph_path(@graph) %>"></div>
   </div>
 </div>
 

@@ -2,13 +2,33 @@ require_dependency "prosperity/application_controller"
 
 module Prosperity
   class GraphsController < ApplicationController
-    before_action :get_graph, only: [:edit, :update]
+    before_action :get_graph, only: [:edit, :update, :show]
     def new
       @graph = Graph.new
     end
 
     def edit
       @graph.graph_lines.build
+    end
+
+    def show
+      end_time = Time.now
+      start_time = end_time - 1.year
+
+      render json: {
+        title: @graph.title,
+        extractors: @graph.graph_lines.map do |line|
+          {
+            key: line.extractor,
+            url: data_metric_path(id: line.metric, 
+                                  extractor: line.extractor, 
+                                  option: line.option, 
+                                  period: @graph.period, 
+                                  start_time: start_time, 
+                                  end_time: end_time),
+          }
+        end
+      }
     end
 
     def update

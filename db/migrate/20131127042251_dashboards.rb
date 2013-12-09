@@ -10,6 +10,7 @@ class Dashboards < ActiveRecord::Migration
       t.integer :graph_id, null: false
       t.string :option, null: false
       t.string :metric, null: false
+      t.string :extractor, null: false
       t.timestamps
     end
 

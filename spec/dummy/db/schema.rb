@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20131127042251) do
     t.integer  "graph_id",   null: false
     t.string   "option",     null: false
     t.string   "metric",     null: false
+    t.string   "extractor",  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
