@@ -13,6 +13,14 @@ module Prosperity
       end
     end
 
+    describe "GET 'show'" do
+      it "returns http success" do
+        get 'show', id: dashboard.id
+        response.should be_success
+        assigns(:dashboard).should == dashboard
+      end
+    end
+
     describe "GET 'edit'" do
       it "returns http success" do
         get 'edit', id: dashboard.id

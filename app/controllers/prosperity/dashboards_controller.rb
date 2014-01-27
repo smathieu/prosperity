@@ -10,6 +10,10 @@ module Prosperity
       @dashboard = Dashboard.new
     end
 
+    def show
+      @dashboard = Dashboard.find(params[:id])
+    end
+
     def edit
       @dashboard = Dashboard.find(params[:id])
     end
