@@ -4,6 +4,8 @@
 
 Prosperity easily lets you add a dashboard of arbitrary time series data to your rails app.
 
+![Screenshot](https://raw2.github.com/smathieu/prosperity/master/doc/screenshot.png "Prosperity")
+
 ## Install
 
 Add this line to your application's Gemfile:
