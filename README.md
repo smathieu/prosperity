@@ -16,6 +16,7 @@ And then execute:
 
 ```bash
 bundle
+bundle exec rake db:migrate
 ```
 
 Add a route to prosperity in ```config/routes.rb```.
