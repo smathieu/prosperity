@@ -17,5 +17,19 @@ module Prosperity
     def now
       @now ||= Time.now
     end
+
+    def period
+      params.fetch(:period, 'month')
+    end
+
+    def end_time 
+      params[:end_time].present? ? Time.parse(params[:end_time].to_s) : now
+    end
+
+    def start_time
+      params[:start_time].present? ? Time.parse(params[:start_time].to_s) : end_time - 12.months
+    end
+
+    helper_method :end_time, :start_time, :period
   end
 end

@@ -1,9 +1,11 @@
-<h1><%= @dashboard.title %><h1>
+<h1><%= @dashboard.title %></h1>
+
+<%= render 'prosperity/shared/date_range' %>
 
 <% @dashboard.graphs.each do |graph| %>
   <div class="graph">
     <h2><%= graph.title %></h2>
 
-    <div class="metric" data-url="<%= graph_path(graph) %>"></div>
+    <div class="metric" data-url="<%= graph_path(graph, start_time: start_time) %>"></div>
   </div>
 <% end %>

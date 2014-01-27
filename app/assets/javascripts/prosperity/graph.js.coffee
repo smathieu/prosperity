@@ -25,9 +25,10 @@ class Graph
 
     getSeries = (url, axisIndex) =>
       $.get url, (json) =>
+        axisIndex = Math.min(axisIndex, chart.yAxis.length - 1)
         serie = 
           data: json.data
-          name: json.key
+          name: json.label
           yAxis: axisIndex
           pointStart: Date.parse(json.start_time)
           pointInterval: json.period_milliseconds
@@ -69,18 +70,20 @@ updateMetricOptions = (el) ->
   return if $el.length == 0
   $form = $el.parents('form')
   options = $form.data('metric-options')
-  possibleOptions = options[$el.val()]
-  console.log(possibleOptions)
+  possibleOptions = options[$el.val()] || []
 
   $optionSelect = $el.parents(".graph-line").find(".metric-option-select select")
+  selectedOption = $form.find("input[type=\"hidden\"][name=\"#{$optionSelect.attr('name')}\"]").val()
+
   $optionSelect.html('')
   for option in possibleOptions
-    $optionSelect.append $('<option>', value: option, text: option)
+    $optionSelect.append $('<option>', value: option, text: option, selected: selectedOption == option)
 
 $(document).on "change", ".edit_graph .metric-title-select select", (e) ->
   updateMetricOptions e.target
 
 $ ->
-  updateMetricOptions $(".edit_graph .metric-title-select select")
+  $(".edit_graph .metric-title-select select").each (i, el) ->
+    updateMetricOptions el
   
 

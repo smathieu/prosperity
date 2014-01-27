@@ -17,9 +17,6 @@ module Prosperity
     end
 
     def show
-      end_time = Time.now
-      start_time = end_time - 1.year
-
       render json: {
         title: @graph.title,
         extractors: @graph.graph_lines.map do |line|

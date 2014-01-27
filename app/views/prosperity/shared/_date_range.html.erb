@@ -1,0 +1,20 @@
+
+<%= form_tag url_for(params), method: "GET" do %>
+
+  <% params.each do |k, v| %>
+    <%= hidden_field_tag k, v %>
+  <% end %>
+
+  <div class="form-group">
+    <%= label_tag :start_time %>
+    <%= date_field_tag :start_time, start_time.to_date %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :end_time %>
+    <%= date_field_tag :end_time, end_time.try(:to_date) %>
+  </div>
+
+  <%= submit_tag "Update", class: 'btn btn-primary' %>
+
+<% end %>

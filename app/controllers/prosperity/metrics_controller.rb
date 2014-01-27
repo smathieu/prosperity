@@ -44,6 +44,7 @@ module Prosperity
       json = {
         data: ext.to_a,
         key: ext.key,
+        label: ext.label,
         start_time: start_time.iso8601,
         period_milliseconds: p.duration * 1000
       }
@@ -60,19 +61,6 @@ module Prosperity
     def option
       params.fetch(:option, 'default')
     end
-
-    def period
-      params.fetch(:period, 'month')
-    end
-
-    def end_time 
-      params[:end_time].present? ? Time.parse(params[:end_time].to_s) : now
-    end
-
-    def start_time
-      params[:start_time].present? ? Time.parse(params[:start_time].to_s) : end_time - 12.months
-    end
-
-    helper_method :option, :end_time, :start_time
+    helper_method :option
   end
 end

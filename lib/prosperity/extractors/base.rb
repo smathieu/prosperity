@@ -15,6 +15,10 @@ module Prosperity
       self.class.key
     end
 
+    def label
+      "#{metric.title} by #{key} with option #{option}"
+    end
+
     private
     def count_up_to_date_with_sql(date)
       fragment = <<-SQL
