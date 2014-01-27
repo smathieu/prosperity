@@ -1,0 +1,15 @@
+<h1>Dashboards</h1>
+
+<p>
+  <ul>
+    <% for dashboard in @dashboards %>
+      <li>
+        <%= link_to dashboard.title, dashboard_path(dashboard) %>
+        -
+        <%= link_to 'edit', edit_dashboard_path(dashboard) %>
+      </li>  
+    <% end %>
+  </ul>
+</p>
+
+<a href="<%= new_dashboard_path %>" class="btn btn-primary">New Dashboard</a>

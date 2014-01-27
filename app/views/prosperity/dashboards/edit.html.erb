@@ -1,0 +1,24 @@
+<h1>Edit Dashboard</h1>
+
+<% if Prosperity::Graph.exists? %>
+  <ul>
+    <% @dashboard.graphs.each do |graph| %>
+      <li>
+        <%= link_to graph.title, edit_graph_path(graph) %>
+        -
+        <%= link_to 'Delete', dashboard_dashboard_graphs_path(dashboard_id: @dashboard.id, graph_id: graph.id), method: :delete %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= form_tag({}, class: "link-graph", method: "POST") do %>
+    <%= hidden_field_tag :dashboard_id, @dashboard.id %>
+    <%= hidden_field_tag :url_template, dashboard_dashboard_graphs_path(dashboard_id: 'dashboard_id', graph_id: 'graph_id') %>
+    <%= select_tag :graph_id, options_from_collection_for_select(Prosperity::Graph.all, :id, :title) %>
+    <%= submit_tag "Add To Dashboard", class: 'btn btn-success' %>
+  <% end %>
+
+  OR 
+<% end %>
+
+<%= link_to "Add New Graph", new_graph_path, class: 'btn btn-primary' %>

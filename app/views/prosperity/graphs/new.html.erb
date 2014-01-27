@@ -1,0 +1,15 @@
+<h1>New Graph</h1>
+
+<%= form_for @graph, html: {role: 'form'} do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :period %>
+    <%= f.select :period, Prosperity::Periods::ALL.keys %>
+  </div>
+
+  <%= f.submit "Save", class: 'btn btn-success' %>
+<% end %>

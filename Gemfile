@@ -13,13 +13,14 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
-gem "haml-rails"
 gem "sass-rails"
 gem "coffee-rails"
 gem "jquery-rails"
 
 group :development, :test do
   gem "rspec-rails"
+  gem "pry-debugger"
+  gem "awesome_print"
 end
 
 group :development do

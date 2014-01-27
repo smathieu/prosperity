@@ -81,6 +81,12 @@ module Prosperity
         response.should be_success
         json['data'].size.should be >= 1
       end
+
+      it "return 404 error code if specified metric does not exist" do
+        get :data, id: 'blah', format: 'json'
+        response.code.to_i.should == 404
+        json['error'].should be_present
+      end
     end
   end
 end

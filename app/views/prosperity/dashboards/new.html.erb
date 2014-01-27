@@ -1,0 +1,8 @@
+<h1>New Dashboards</h1>
+
+<%= form_for @dashboard do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.submit nil, class: "btn btn-success" %>
+<% end%>

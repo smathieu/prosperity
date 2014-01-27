@@ -1,0 +1,9 @@
+<h1><%= @dashboard.title %><h1>
+
+<% @dashboard.graphs.each do |graph| %>
+  <div class="graph">
+    <h2><%= graph.title %></h2>
+
+    <div class="metric" data-url="<%= graph_path(graph) %>"></div>
+  </div>
+<% end %>
