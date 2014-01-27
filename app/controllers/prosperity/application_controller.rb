@@ -13,5 +13,9 @@ module Prosperity
     def strong_params?
       defined?(ActionController::StrongParameters)
     end
+
+    def now
+      @now ||= Time.now
+    end
   end
 end

@@ -66,6 +66,7 @@ class Graph
 
 updateMetricOptions = (el) ->
   $el = $(el)
+  return if $el.length == 0
   $form = $el.parents('form')
   options = $form.data('metric-options')
   possibleOptions = options[$el.val()]
