@@ -63,3 +63,23 @@ class Graph
   
 @Prosperity ||= {}
 @Prosperity.Graph = Graph
+
+updateMetricOptions = (el) ->
+  $el = $(el)
+  $form = $el.parents('form')
+  options = $form.data('metric-options')
+  possibleOptions = options[$el.val()]
+  console.log(possibleOptions)
+
+  $optionSelect = $el.parents(".graph-line").find(".metric-option-select select")
+  $optionSelect.html('')
+  for option in possibleOptions
+    $optionSelect.append $('<option>', value: option, text: option)
+
+$(document).on "change", ".edit_graph .metric-title-select select", (e) ->
+  updateMetricOptions e.target
+
+$ ->
+  updateMetricOptions $(".edit_graph .metric-title-select select")
+  
+

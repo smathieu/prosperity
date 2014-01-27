@@ -95,6 +95,51 @@ module Prosperity
         response.should be_redirect
         graph.reload.graph_lines.size.should == 1
       end
+
+      let(:line) { graph_w_line.graph_lines.first }
+      let(:update_line_attrs) do
+        {
+          "graph_lines_attributes" => {
+            "0" => {
+              id: line.id,
+              option: 'new_option',
+              extractor: 'group'
+            }
+          }
+        }
+      end
+
+      it "updates an existing line" do
+        put :update, id: graph_w_line.id, graph: update_line_attrs
+        response.should be_redirect
+        line = graph_w_line.reload.graph_lines.first
+        line.option.should == 'new_option'
+        line.extractor.should == 'group'
+      end
+
+      it "updates an existing line while ignoring blank ones" do
+        line = graph.graph_lines.create!(valid_line_attributes)
+
+        attrs = {
+          "graph_lines_attributes"=>{
+            "0"=>{
+              "option"=>"default", 
+              "metric"=>"UsersMetric", 
+              "extractor"=>"group", 
+              "id"=> line.id,
+            }, "1"=>{
+              "option"=>"default", 
+              "metric"=>"", 
+              "extractor"=>"change"
+            }
+          }
+        }
+
+        put :update, id: graph.id, graph: attrs
+        response.should be_redirect
+        line.reload.extractor.should == 'group'
+        graph.reload.graph_lines.count.should == 1
+      end
     end
   end
 end

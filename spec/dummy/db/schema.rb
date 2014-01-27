@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20131127042251) do
   end
 
   add_index "prosperity_dashboard_graphs", ["dashboard_id"], name: "index_prosperity_dashboard_graphs_on_dashboard_id", using: :btree
-  add_index "prosperity_dashboard_graphs", ["graph_id"], name: "index_prosperity_dashboard_graphs_on_graph_id", using: :btree
+  add_index "prosperity_dashboard_graphs", ["graph_id", "dashboard_id"], name: "index_prosperity_dashboard_graphs_on_graph_id_and_dashboard_id", unique: true, using: :btree
 
   create_table "prosperity_dashboards", force: true do |t|
     t.string   "title",      null: false

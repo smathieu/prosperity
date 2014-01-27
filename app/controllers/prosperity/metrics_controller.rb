@@ -50,6 +50,8 @@ module Prosperity
 
     def get_metric
       @metric = MetricFinder.find_by_name(params.fetch(:id)).new
+    rescue NameError
+      render_json_error("Could not find metric #{params.fetch(:id)}", 404)
     end
 
     def option

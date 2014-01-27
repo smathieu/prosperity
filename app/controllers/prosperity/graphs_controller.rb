@@ -8,6 +8,11 @@ module Prosperity
     end
 
     def edit
+      @metrics = MetricFinder.all.map(&:new)
+      @options = @metrics.inject({}) do |h, metric|
+        h[metric.id] = metric.options.keys
+        h
+      end
       @graph.graph_lines.build
     end
 
@@ -32,7 +37,7 @@ module Prosperity
     end
 
     def update
-      unless @graph.update_attributes graph_params
+      unless @graph.update_attributes(graph_params)
         set_error(@graph)
       end
       redirect_to action: :edit
@@ -61,7 +66,7 @@ module Prosperity
     def graph_params
       if strong_params?
         params.require(:graph).
-          permit(Graph::ATTR_ACCESSIBLE + [:graph_lines_attributes => GraphLine::ATTR_ACCESSIBLE])
+          permit(Graph::ATTR_ACCESSIBLE + [:graph_lines_attributes => (GraphLine::ATTR_ACCESSIBLE + [:id])])
       else
         params.fetch(:graph, {})     
       end
