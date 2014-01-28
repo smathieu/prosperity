@@ -54,7 +54,7 @@ module Prosperity
           let(:data) { subject.to_a }
 
           it "returns the one entry per period" do
-            data.size.should == 54
+            [54, 53].should include(data.size)
           end
 
           it "only returns models from that period" do
