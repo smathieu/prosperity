@@ -118,5 +118,16 @@ module Prosperity
         subject.options['active'].should be_present
       end
     end
+
+    context "A metric with a scutom group by" do
+      subject do
+        Class.new(Metric) do 
+          scope { User }
+          group_by "users.created_at"
+        end.new
+      end
+
+      its(:group_by) { should == 'users.created_at' }
+    end
   end
 end

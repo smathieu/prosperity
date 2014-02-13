@@ -37,6 +37,14 @@ module Prosperity
       @options ||= default_options
     end
 
+    def self.group_by(column = nil)
+      if column
+        @group_by = column
+      else
+        @group_by || :created_at
+      end
+    end
+
     def self.extractors
       [Extractors::Group, Extractors::Count, Extractors::Change].inject({}) do |h, ext|
         h[ext.key] = ext
@@ -53,7 +61,7 @@ module Prosperity
     end
 
     def group_by
-      :created_at
+      self.class.group_by
     end
 
     def scope
