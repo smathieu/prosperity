@@ -1,6 +1,9 @@
 <h1><%= @dashboard.title %></h1>
 
-<%= render 'prosperity/shared/date_range' %>
+<%= form_tag(dashboard_path(params[:id]), method: 'get') do %>
+  <%= render 'prosperity/shared/date_range' %>
+  <%= submit_tag "Update", class: 'btn btn-primary' %>
+<% end %>
 
 <% @dashboard.graphs.each do |graph| %>
   <div class="graph">

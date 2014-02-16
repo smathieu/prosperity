@@ -9,7 +9,6 @@ module Prosperity
       render json: {error: msg}, status: code
     end
 
-
     def strong_params?
       defined?(ActionController::StrongParameters)
     end

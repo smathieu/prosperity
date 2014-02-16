@@ -1,26 +1,23 @@
 <h1>
   <%= @metric.title %>
 </h1>
-<div class="metric" data-url="<%= url_for(params) %>"></div>
 
-<h3>Options</h3>
-<ul>
-  <% @metric.options.each do |name, opt| %>
-    <li>
-      <%= link_to name, url_for(params.merge(option: name)) %>
-    </li>
-  <% end %>
-</ul>
+<div class="metric" data-url="<%= metric_path(params) %>"></div>
 
-<h3>Period</h3>
-<ul>
-  <% Prosperity::Periods::ALL.each do |key, period| %>
-    <li>
-      <%= link_to key, url_for(params.merge(period: key)) %>
-    </li>
-  <% end %>
-</ul>
+<%= form_tag(metric_path(params[:id]), method: 'get') do %>
+  <h2>Settings</h2>
+  <div class='well'>
+    <h3>Option</h3>
 
-<h3>Date</h3>
+    <%= select_tag :option, options_for_select(@metric.options.keys, option) %>
 
-<%= render 'prosperity/shared/date_range' %>
+    <h3>Period</h3>
+    <% Prosperity::Periods::ALL.each do |key, period_object| %>
+      <%= radio_button_tag "period", key, key == period %>
+      <%= label_tag "period_#{key}", key.titleize %>
+    <% end %>
+
+    <%= render 'prosperity/shared/date_range' %>
+    <%= submit_tag "Update", class: 'btn btn-primary' %>
+  </div>
+<% end %>
