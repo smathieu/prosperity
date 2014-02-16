@@ -30,7 +30,7 @@ mount Prosperity::Engine => "/prosperity"
 You can then generate your first metric.
 
 ```bash
-rails g metric User
+rails g metric Users
 ```
 
 This will generate app/prosperity/user_metric.rb
@@ -61,7 +61,7 @@ rake db:create db:migrate RAILS_ENV=test
 
 and to run the tests;
 ```bash
-rspec
+bundl exec rspec
 ```
 
 ## License
@@ -70,9 +70,4 @@ This project rocks and uses MIT-LICENSE.
 
 ## Todo
 
-- Better Docs
-- Select data range
-- Export data to CSV
-- SQL support
-- Graph % change since last value
-- Dashboard
+See [Issues](https://github.com/smathieu/prosperity/issues?labels=enhancement&page=1&state=open)
