@@ -47,6 +47,18 @@ class UsersMetric < Prosperity::Metric
 end
 ```
 
+By default, Prosperity will return a count of object grouped by period. You can also use other aggragation function such as `minimum`, `maximum`, `average` and `sum`.
+
+You can use them as follow:
+
+
+```ruby
+class UsersMetric < Prosperity::Metric
+  scope { User.join(:subsriptions) }
+  aggregate { sum(:price_in_cents) }
+end
+```
+
 ## Development
 
 To get started with a development environment with [pow](http://pow.cx/), follow these instructions;
