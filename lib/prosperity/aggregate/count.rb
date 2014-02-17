@@ -3,6 +3,10 @@ module Prosperity
     def to_sql
       "COUNT(1)"
     end
+
+    def apply(scope)
+      scope.count
+    end
   end
 end
 

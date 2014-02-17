@@ -1,6 +1,7 @@
 module Prosperity
   class Extractors::Count < Extractors::Base
     def self.key
+      # TODO considerer rename to total?
       "count"
     end
 
@@ -11,7 +12,7 @@ module Prosperity
         if metric.sql?
           data << count_up_to_date_with_sql(start_time)
         else
-          data << scope.where("#{metric.group_by} < ?", start_time).count
+          data << metric.aggregate.apply(scope.where("#{metric.group_by} < ?", start_time))
         end
       end
 

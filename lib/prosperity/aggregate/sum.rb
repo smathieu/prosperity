@@ -7,7 +7,11 @@ module Prosperity
     end
 
     def to_sql
-      "COUNT(#{column})"
+      "SUM(#{column})"
+    end
+
+    def apply(scope)
+      scope.sum(column)
     end
   end
 end

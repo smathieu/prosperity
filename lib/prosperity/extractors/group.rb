@@ -10,18 +10,19 @@ module Prosperity
           WITH prosperity_metric_count AS (
             #{metric.sql}
           )
-          SELECT to_char(#{metric.group_by}, '#{period.db_strf_str}') AS bucket, COUNT(1)
+          SELECT to_char(#{metric.group_by}, '#{period.db_strf_str}') AS bucket, #{aggregate.to_sql} AS result
           FROM prosperity_metric_count
           WHERE (#{metric.group_by} BETWEEN '#{@start_time.iso8601}' AND '#{@end_time.iso8601}')
           GROUP BY bucket
         SQL
         result = ActiveRecord::Base.connection.execute(fragment)
         s = result.to_a.inject({}) {|accum, el|
-          accum.update(el["bucket"] => el["count"].to_i)
+          accum.update(el["bucket"] => el["result"].to_f)
         }
       else
         s = scope.where("#{metric.group_by} BETWEEN ? AND ?", @start_time, @end_time)
-        s = s.group("to_char(#{metric.group_by}, '#{period.db_strf_str}')").count
+        s = s.group("to_char(#{metric.group_by}, '#{period.db_strf_str}')")
+        s = aggregate.apply(s)
       end
 
 

@@ -100,5 +100,48 @@ module Prosperity
         end
       end
     end
+
+    context "a metric with a sum aggregate" do
+      before do
+        User.create! value: 1
+        User.create! value: 3
+      end
+
+      context "a non sql metric" do
+        let(:metric) do
+          Class.new(Metric) do
+            scope { User }
+            aggregate { sum(:value) }
+          end.new
+        end
+
+        describe "#to_a" do
+          let(:data) { subject.to_a }
+
+          it "returns the one entry per period" do
+            data.size.should == 13
+            data.last.should == User.all.sum(:value)
+          end
+        end
+      end
+
+      context "a sql metric" do
+        let(:metric) do
+          Class.new(Metric) do
+            sql "SELECT * FROM users"
+            aggregate { sum(:value) }
+          end.new
+        end
+
+        describe "#to_a" do
+          let(:data) { subject.to_a }
+
+          it "returns the one entry per period" do
+            data.size.should == 13
+            data.last.should == User.all.sum(:value)
+          end
+        end
+      end
+    end
   end
 end

@@ -12,6 +12,7 @@ RSpec.configure do |config|
     m.create_table :users do |t|
       t.string :email
       t.string :name
+      t.integer :value
       t.timestamps
     end
   end
