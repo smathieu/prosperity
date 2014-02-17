@@ -37,5 +37,29 @@ module Prosperity
         end
       end
     end
+
+    context "a sql aggregate from a block" do
+      subject do 
+        described_class.new do
+          "SUM(value)"
+        end.build
+      end
+
+      it "returns a SQL type" do
+        subject.should be_an(Aggregate::Sql)
+        subject.to_sql.should == 'SUM(value)'
+      end
+    end
+    
+    context "a sql aggregate from a block" do
+      subject do 
+        described_class.new("SUM(value)").build
+      end
+
+      it "returns a SQL type" do
+        subject.should be_an(Aggregate::Sql)
+        subject.to_sql.should == 'SUM(value)'
+      end
+    end
   end
 end

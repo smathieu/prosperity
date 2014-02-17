@@ -43,4 +43,21 @@ shared_examples "an extractor" do
       end
     end
   end
+
+  context "a full SQL metric" do
+    let(:metric) do
+      Class.new(Prosperity::Metric) do
+        sql "SELECT * FROM users"
+        group_by "created_at"
+        aggregate { "SUM(value)" }
+      end.new
+    end
+
+    describe "#to_a" do
+      let(:data) { subject.to_a }
+      it "returns the one entry per period" do
+        data.size.should == 13
+      end
+    end
+  end
 end

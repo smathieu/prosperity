@@ -2,12 +2,20 @@ module Prosperity
   class Aggregate::Builder 
     attr_reader :block
 
-    def initialize(&block)
+    def initialize(string = nil, &block)
+      raise "Can't specify a string and a block" if string && block_given?
+
+      @string = string
       @block = block
     end
 
     def build
-      instance_eval &block
+      res = @string ? @string : instance_eval(&block)
+      if res.is_a?(String)
+        Aggregate::Sql.new(res)
+      else
+        res
+      end
     end
 
     def count
