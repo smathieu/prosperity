@@ -22,8 +22,7 @@ module Prosperity
       end
 
       it "should have the default aggregate" do
-        subject.aggregate.should be_an(Aggregate)
-        subject.aggregate.type.should == :count
+        subject.aggregate.should be_an(Aggregate::Count)
       end
     end
 
@@ -146,7 +145,7 @@ module Prosperity
       let(:aggregate) { subject.aggregate }
 
       it "has the correct aggregate info" do
-        aggregate.should be_an(Aggregate)
+        aggregate.should be_an(Aggregate::Sum)
         aggregate.column.should == :some_column
       end
     end

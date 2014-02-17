@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Prosperity
-  describe Aggregate do
+  describe Aggregate::Sum do
 
   end
 end

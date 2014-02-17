@@ -1,5 +1,5 @@
 module Prosperity
-  class Aggregate 
+  class Aggregate::Base 
   end
 end
 
