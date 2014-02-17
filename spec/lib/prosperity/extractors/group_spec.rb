@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module Prosperity
   describe Extractors::Group do
+    it_behaves_like "an extractor"
+
     let(:start_time) { 1.year.ago }
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
@@ -97,6 +99,49 @@ module Prosperity
 
         it "only returns models from that period" do
           data.sum.should == 2
+        end
+      end
+    end
+
+    context "a metric with a sum aggregate" do
+      before do
+        User.create! value: 1
+        User.create! value: 3
+      end
+
+      context "a non sql metric" do
+        let(:metric) do
+          Class.new(Metric) do
+            scope { User }
+            aggregate { sum(:value) }
+          end.new
+        end
+
+        describe "#to_a" do
+          let(:data) { subject.to_a }
+
+          it "returns the one entry per period" do
+            data.size.should == 13
+            data.last.should == User.all.sum(:value)
+          end
+        end
+      end
+
+      context "a sql metric" do
+        let(:metric) do
+          Class.new(Metric) do
+            sql "SELECT * FROM users"
+            aggregate { sum(:value) }
+          end.new
+        end
+
+        describe "#to_a" do
+          let(:data) { subject.to_a }
+
+          it "returns the one entry per period" do
+            data.size.should == 13
+            data.last.should == User.all.sum(:value)
+          end
         end
       end
     end

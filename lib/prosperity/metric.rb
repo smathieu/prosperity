@@ -45,6 +45,14 @@ module Prosperity
       end
     end
 
+    def self.aggregate(&block)
+      if block_given?
+        @aggregate = Aggregate::Builder.new(&block).build
+      else
+        @aggregate || Aggregate::Count.new
+      end
+    end
+
     def self.extractors
       [Extractors::Group, Extractors::Count, Extractors::Change].inject({}) do |h, ext|
         h[ext.key] = ext
@@ -74,6 +82,10 @@ module Prosperity
 
     def options
       self.class.options
+    end
+
+    def aggregate
+      self.class.aggregate
     end
 
     def title

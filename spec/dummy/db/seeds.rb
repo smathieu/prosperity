@@ -3,5 +3,7 @@
   User.create name: "User #{i}", 
     email: "user+#{i}@example.org",
     created_at: t,
-    updated_at: t
+    updated_at: t, 
+    value: (rand * 100).to_i
+
 end
