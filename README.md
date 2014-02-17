@@ -59,6 +59,20 @@ class UsersMetric < Prosperity::Metric
 end
 ```
 
+### SQL support
+
+Prosperity also supports raw SQL in queries. 
+
+```ruby
+class UsersMetric < Prosperity::Metric
+  sql "SELECT * FROM users"
+  group_by "created_at"
+  aggregate { "SUM(value)" }
+end
+```
+
+Unfortunately, there's currently a few limitations to SQL bases queries. PR to fix those are more than welcome :)
+
 ## Development
 
 To get started with a development environment with [pow](http://pow.cx/), follow these instructions;
