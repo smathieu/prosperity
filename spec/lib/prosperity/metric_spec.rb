@@ -20,6 +20,11 @@ module Prosperity
       it "should not be sql" do
         subject.should_not be_sql
       end
+
+      it "should have the default aggregate" do
+        subject.aggregate.should be_an(Aggregate)
+        subject.aggregate.type.should == :count
+      end
     end
 
     context "A raw sql metric" do
@@ -119,7 +124,7 @@ module Prosperity
       end
     end
 
-    context "A metric with a scutom group by" do
+    context "A metric with a custom group by" do
       subject do
         Class.new(Metric) do 
           scope { User }
@@ -128,6 +133,22 @@ module Prosperity
       end
 
       its(:group_by) { should == 'users.created_at' }
+    end
+
+    context "A metric with a a sum aggregate" do
+      subject do
+        Class.new(Metric) do 
+          scope { User }
+          aggregate { sum(:some_column) }
+        end.new
+      end
+
+      let(:aggregate) { subject.aggregate }
+
+      it "has the correct aggregate info" do
+        aggregate.should be_an(Aggregate)
+        aggregate.column.should == :some_column
+      end
     end
   end
 end
