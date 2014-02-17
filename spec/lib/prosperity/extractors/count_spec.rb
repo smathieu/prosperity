@@ -2,12 +2,17 @@ require 'spec_helper'
 
 module Prosperity
   describe Extractors::Count do
+    it_behaves_like "an extractor"
+
     let(:start_time) { 1.year.ago }
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
 
     let(:data) { subject.to_a }
     let(:metric) { UsersMetric.new }
+    let(:option) { 'default' }
+
+    subject { Extractors::Count.new(metric, option, start_time, end_time, period) }
 
     before do 
       User.delete_all
@@ -17,7 +22,6 @@ module Prosperity
     end
 
     context "simple scope" do
-      subject { Extractors::Count.new(metric, 'default', start_time, end_time, period) }
       describe "#to_a" do
         it "returns the one entry per period" do
           data.size.should == 13
@@ -31,7 +35,7 @@ module Prosperity
     end
 
     context "simple sql fragment" do
-      subject { Extractors::Count.new(UsersSqlMetric.new, 'default', start_time, end_time, period) }
+      let(:metric) { UsersSqlMetric.new }
 
       describe "#to_a" do
         it "returns the one entry per period" do
@@ -46,7 +50,7 @@ module Prosperity
     end
 
     context "with an option" do
-      subject { Extractors::Count.new(metric, 'no_results', start_time, end_time, period) }
+      let(:option) { "no_results" }
 
       describe "#to_a" do
         it "only returns the results for that option block" do

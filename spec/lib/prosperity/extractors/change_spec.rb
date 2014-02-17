@@ -2,6 +2,8 @@ require 'spec_helper'
 
 module Prosperity
   describe Extractors::Change do
+    it_behaves_like "an extractor"
+    
     let(:start_time) { 1.year.ago }
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }

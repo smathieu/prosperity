@@ -1,11 +1,5 @@
 module Prosperity
-  class Aggregate::Sum < Aggregate::Base
-    attr_reader :column
-
-    def initialize(column)
-      @column = column
-    end
-
+  class Aggregate::Sum < Aggregate::WithColumn
     def to_sql
       "SUM(#{column})"
     end

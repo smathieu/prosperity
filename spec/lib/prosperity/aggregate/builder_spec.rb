@@ -15,16 +15,25 @@ module Prosperity
         end
       end
 
-      context "the sum aggregate" do
-        subject do 
-          described_class.new do
-            sum(:some_column)
-          end.build
-        end
+      AGGREGATES = {
+        :sum => Aggregate::Sum,
+        :minimum => Aggregate::Minimum,
+        :maximum => Aggregate::Maximum,
+        :average => Aggregate::Average,
+      }
 
-        it "returns a Aggregate::Count" do
-          subject.should be_an(Aggregate::Sum)
-          subject.column.should == :some_column
+      AGGREGATES.each do |func, type|
+        context "the #{func} aggregate" do
+          subject do 
+            described_class.new do
+              send(func, :some_column)
+            end.build
+          end
+
+          it "returns a #{type}" do
+            subject.should be_an(type)
+            subject.column.should == :some_column
+          end
         end
       end
     end
