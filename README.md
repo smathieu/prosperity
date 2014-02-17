@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/smathieu/prosperity.png)](https://travis-ci.org/smathieu/prosperity)
 
-Prosperity easily lets you add a dashboard of arbitrary time series data to your rails app.
+Prosperity easily lets you add a dashboard of arbitrary time series data to your rails app. Is lets you easily graph anything that changes over time using your existing ActiveRecord scopes or raw SQL. 
+This is still a work in progress, but it should already make it much easier to create dashboard withing your Rails app. Currently only supports PostgreSQL, but should be easily portable to other DBs.
 
 ![Screenshot](https://raw2.github.com/smathieu/prosperity/master/doc/screenshot.png "Prosperity")
 
@@ -26,6 +27,8 @@ Add a route to prosperity in ```config/routes.rb```.
 ```ruby
 mount Prosperity::Engine => "/prosperity"
 ```
+
+## Usage
 
 You can then generate your first metric.
 
@@ -94,6 +97,6 @@ bundl exec rspec
 
 This project rocks and uses MIT-LICENSE.
 
-## Todo
+## TODO
 
 See [Issues](https://github.com/smathieu/prosperity/issues?labels=enhancement&page=1&state=open)
