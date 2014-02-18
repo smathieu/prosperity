@@ -18,7 +18,7 @@ module Prosperity
     end
 
     def period
-      params.fetch(:period, 'month')
+      params.fetch(:period, 'week')
     end
 
     def end_time 
@@ -26,7 +26,7 @@ module Prosperity
     end
 
     def start_time
-      params[:start_time].present? ? Time.parse(params[:start_time].to_s) : end_time - 12.months
+      params[:start_time].present? ? Time.parse(params[:start_time].to_s) : end_time - 3.months
     end
 
     helper_method :end_time, :start_time, :period

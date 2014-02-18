@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Prosperity
-  describe Aggregate::Builder do
+  describe Aggregate::AggregateBuilder do
     describe "#build" do
       context "the count aggregate" do
         subject do 

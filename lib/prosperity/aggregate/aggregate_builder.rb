@@ -1,5 +1,5 @@
 module Prosperity
-  class Aggregate::Builder 
+  class Aggregate::AggregateBuilder 
     attr_reader :block
 
     def initialize(string = nil, &block)

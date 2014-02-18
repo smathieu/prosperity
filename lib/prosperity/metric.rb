@@ -47,9 +47,9 @@ module Prosperity
 
     def self.aggregate(&block)
       if block_given?
-        @aggregate = Aggregate::Builder.new(&block).build
+        @aggregate = ::Prosperity::Aggregate::AggregateBuilder.new(&block).build
       else
-        @aggregate || Aggregate::Count.new
+        @aggregate || ::Prosperity::Aggregate::Count.new
       end
     end
 
