@@ -36,7 +36,7 @@ module Prosperity
     end
 
     def data
-      ext_klass = Metric.extractors[params.fetch(:extractor, "group")]
+      ext_klass = Metric.extractors[params.fetch(:extractor, "interval")]
 
       p = Prosperity::Periods::ALL.fetch(period)
       ext = ext_klass.new(@metric, option, start_time, end_time, p)

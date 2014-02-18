@@ -103,7 +103,7 @@ module Prosperity
             "0" => {
               id: line.id,
               option: 'new_option',
-              extractor: 'group'
+              extractor: 'interval'
             }
           }
         }
@@ -114,7 +114,7 @@ module Prosperity
         response.should be_redirect
         line = graph_w_line.reload.graph_lines.first
         line.option.should == 'new_option'
-        line.extractor.should == 'group'
+        line.extractor.should == 'interval'
       end
 
       it "updates an existing line while ignoring blank ones" do
@@ -125,7 +125,7 @@ module Prosperity
             "0"=>{
               "option"=>"default", 
               "metric"=>"UsersMetric", 
-              "extractor"=>"group", 
+              "extractor"=>"interval", 
               "id"=> line.id,
             }, "1"=>{
               "option"=>"default", 
@@ -137,7 +137,7 @@ module Prosperity
 
         put :update, id: graph.id, graph: attrs
         response.should be_redirect
-        line.reload.extractor.should == 'group'
+        line.reload.extractor.should == 'interval'
         graph.reload.graph_lines.count.should == 1
       end
     end

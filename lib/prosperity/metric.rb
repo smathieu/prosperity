@@ -54,7 +54,7 @@ module Prosperity
     end
 
     def self.extractors
-      [Extractors::Group, Extractors::Count, Extractors::Change].inject({}) do |h, ext|
+      [Extractors::Interval, Extractors::Total, Extractors::Change].inject({}) do |h, ext|
         h[ext.key] = ext
         h
       end

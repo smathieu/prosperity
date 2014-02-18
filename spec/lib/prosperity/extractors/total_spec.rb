@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Prosperity
-  describe Extractors::Count do
+  describe Extractors::Total do
     it_behaves_like "an extractor"
 
     let(:start_time) { 1.year.ago }
@@ -12,7 +12,7 @@ module Prosperity
     let(:metric) { UsersMetric.new }
     let(:option) { 'default' }
 
-    subject { Extractors::Count.new(metric, option, start_time, end_time, period) }
+    subject { Extractors::Total.new(metric, option, start_time, end_time, period) }
 
     before do 
       User.delete_all

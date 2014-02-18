@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 module Prosperity
-  describe Extractors::Group do
+  describe Extractors::Interval do
     it_behaves_like "an extractor"
 
     let(:start_time) { 1.year.ago }
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
 
-    subject { Extractors::Group.new(metric, 'default', start_time, end_time, period) }
+    subject { Extractors::Interval.new(metric, 'default', start_time, end_time, period) }
 
     before do 
       User.delete_all

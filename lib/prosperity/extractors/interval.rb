@@ -1,7 +1,7 @@
 module Prosperity
-  class Extractors::Group < Extractors::Base
+  class Extractors::Interval < Extractors::Base
     def self.key
-      "group"  
+      "interval"  
     end
 
     def to_a

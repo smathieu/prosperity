@@ -38,8 +38,8 @@ module Prosperity
     end
 
     describe "GET data" do
-      it "returns group data by default" do
-        Extractors::Group.any_instance.stub(to_a: [1,2,3])
+      it "returns interval data by default" do
+        Extractors::Interval.any_instance.stub(to_a: [1,2,3])
 
         get :data, id: metric.id, format: 'json'
         response.should be_success
@@ -47,19 +47,19 @@ module Prosperity
       end
 
       it "lets you specify any extractor key" do
-        Extractors::Count.any_instance.stub(to_a: [1,2,3])
+        Extractors::Total.any_instance.stub(to_a: [1,2,3])
 
-        get :data, id: metric.id, extractor: 'count', format: 'json'
+        get :data, id: metric.id, extractor: 'total', format: 'json'
         response.should be_success
         json['data'].should == [1,2,3]
-        json['key'].should == 'count'
+        json['key'].should == 'total'
         DateTime.parse(json['start_time']).to_i.should == 3.months.ago.to_i
         json['period_milliseconds'].should == 1.week.to_i * 1000
       end
 
       it "lets you specify the option parameter" do
-        Extractors::Group.any_instance.stub(to_a: [1,2,3])
-        Extractors::Group.should_receive(:new).with(anything,
+        Extractors::Interval.any_instance.stub(to_a: [1,2,3])
+        Extractors::Interval.should_receive(:new).with(anything,
             'with_1',
             anything,
             anything,

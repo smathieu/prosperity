@@ -1,8 +1,7 @@
 module Prosperity
-  class Extractors::Count < Extractors::Base
+  class Extractors::Total < Extractors::Base
     def self.key
-      # TODO considerer rename to total?
-      "count"
+      "total"
     end
 
     def to_a
