@@ -1,7 +1,7 @@
 module Prosperity
   class Extractors::Interval < Extractors::Base
     def self.key
-      "interval"  
+      "interval"
     end
 
     def to_a
@@ -19,6 +19,16 @@ module Prosperity
         s = result.to_a.inject({}) {|accum, el|
           accum.update(el["bucket"] => el["result"].to_f)
         }
+      elsif metric.ruby?
+        data = []
+        period.each_period(start_time, end_time) do |start_time|
+          new = metric.value_at.call(start_time, period)
+          last = metric.value_at.call(start_time - period.duration, period)
+
+          data << new - last
+        end
+
+        return data
       else
         s = scope.where("#{metric.group_by} BETWEEN ? AND ?", @start_time, @end_time)
         s = s.group("to_char(#{metric.group_by}, '#{period.db_strf_str}')")

@@ -3,9 +3,10 @@ require 'spec_helper'
 module Prosperity
   describe Extractors::Total do
     it_behaves_like "an extractor"
+    let(:expected_data_size) { 14 }
 
     let(:start_time) { 1.year.ago }
-    let(:end_time) { start_time + 1.year }
+    let(:end_time) { start_time + 12.months }
     let(:period) { Periods::MONTH }
 
     let(:data) { subject.to_a }
@@ -24,7 +25,7 @@ module Prosperity
     context "simple scope" do
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == 13
+          data.size.should == expected_data_size
         end
 
         it "returns the counts at it increases" do
@@ -39,7 +40,7 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == 13
+          data.size.should == expected_data_size
         end
 
         it "returns the counts at it increases" do
@@ -55,6 +56,22 @@ module Prosperity
       describe "#to_a" do
         it "only returns the results for that option block" do
           data.all?(&:zero?).should be_true          
+        end
+      end
+    end
+
+    context "ruby block" do
+      let(:metric) do
+        Class.new(Metric) do
+          value_at do |time, period, *|
+            10
+          end
+        end.new
+      end
+
+      describe "#to_a" do
+        it "delegates to the ruby block" do
+          data.should == [10] * expected_data_size
         end
       end
     end

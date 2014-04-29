@@ -14,6 +14,12 @@ module Prosperity
     end
   end
 
+  class MissingValueAt < Exception
+    def initialize
+      super "You have asked for the value_at, but none was specified"
+    end
+  end
+
   class SqlMetricCannotHaveOption < Exception
     def initialize
       super "Sql metrics cannot have options"

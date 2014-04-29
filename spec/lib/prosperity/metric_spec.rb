@@ -149,5 +149,26 @@ module Prosperity
         aggregate.column.should == :some_column
       end
     end
+
+    context "a ruby code metric" do
+      subject do
+        Class.new(Metric) do
+          value_at do |time, period, option|
+            :expected
+          end
+        end.new
+      end
+
+      it "has the correct value_at info" do
+        subject.value_at.call.should == :expected
+      end
+
+      describe ".ruby?" do
+        it "should be true" do
+          subject.class.ruby?.should == true
+          subject.ruby?.should == true
+        end
+      end
+    end
   end
 end

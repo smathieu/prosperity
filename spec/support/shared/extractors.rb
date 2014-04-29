@@ -1,5 +1,6 @@
 shared_examples "an extractor" do
   AGGREGATES = [:sum, :minimum, :maximum, :average]
+  let(:expected_data_size) { 14 }
 
   ["sql", "normal"].each do |type|
     AGGREGATES.each do |agg|
@@ -18,7 +19,7 @@ shared_examples "an extractor" do
         describe "#to_a" do
           let(:data) { subject.to_a }
           it "returns the one entry per period" do
-            data.size.should == 13
+            data.size.should == expected_data_size
           end
         end
       end
@@ -38,7 +39,7 @@ shared_examples "an extractor" do
       describe "#to_a" do
         let(:data) { subject.to_a }
         it "returns the one entry per period" do
-          data.size.should == 13
+          data.size.should == expected_data_size
         end
       end
     end
@@ -56,7 +57,7 @@ shared_examples "an extractor" do
     describe "#to_a" do
       let(:data) { subject.to_a }
       it "returns the one entry per period" do
-        data.size.should == 13
+        data.size.should == expected_data_size
       end
     end
   end

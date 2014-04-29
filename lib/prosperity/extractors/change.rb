@@ -11,6 +11,9 @@ module Prosperity
         if metric.sql?
           new = count_up_to_date_with_sql(start_time)
           last = count_up_to_date_with_sql(start_time - period.duration)
+        elsif metric.ruby?
+          new = metric.value_at.call(start_time, period)
+          last = metric.value_at.call(start_time - period.duration, period)
         else
           new = aggregate.apply(scope.where("#{metric.group_by} < ?", start_time))
           last = aggregate.apply(scope.where("#{metric.group_by} < ?", start_time - period.duration))

@@ -2,15 +2,17 @@ require 'spec_helper'
 
 module Prosperity
   describe Extractors::Interval do
+    let(:expected_data_size) { 14 }
     it_behaves_like "an extractor"
 
     let(:start_time) { 1.year.ago }
     let(:end_time) { start_time + 1.year }
     let(:period) { Periods::MONTH }
+    let(:data) { subject.to_a }
 
     subject { Extractors::Interval.new(metric, 'default', start_time, end_time, period) }
 
-    before do 
+    before do
       User.delete_all
       [2.years.ago, 1.month.ago, 1.month.from_now].each do |time|
         User.create created_at: time
@@ -22,10 +24,8 @@ module Prosperity
       let(:metric) { UsersMetric.new }
 
       describe "#to_a" do
-        let(:data) { subject.to_a }
-
         it "returns the one entry per period" do
-          data.size.should == 13
+          data.size.should == expected_data_size
         end
 
         it "only returns models from that period" do
@@ -38,10 +38,8 @@ module Prosperity
       let(:metric) { UsersSqlMetric.new }
 
       describe "#to_a" do
-        let(:data) { subject.to_a }
-
         it "returns the one entry per period" do
-          data.size.should == 13
+          data.size.should == expected_data_size
         end
 
         it "only returns models from that period" do
@@ -53,8 +51,6 @@ module Prosperity
         let(:period) { Periods::WEEK }
 
         describe "#to_a" do
-          let(:data) { subject.to_a }
-
           it "returns the one entry per period" do
             [54, 53].should include(data.size)
           end
@@ -69,10 +65,8 @@ module Prosperity
           let(:end_time) { start_time + 2.weeks }
 
           describe "#to_a" do
-            let(:data) { subject.to_a }
-
             it "returns the one entry per period" do
-              data.size.should == 3
+              data.size.should == 4
             end
 
             it "only returns models from that period" do
@@ -91,10 +85,8 @@ module Prosperity
       end
 
       describe "#to_a" do
-        let(:data) { subject.to_a }
-
         it "returns the one entry per period" do
-          data.size.should == 13
+          data.size.should == expected_data_size
         end
 
         it "only returns models from that period" do
@@ -118,11 +110,9 @@ module Prosperity
         end
 
         describe "#to_a" do
-          let(:data) { subject.to_a }
-
           it "returns the one entry per period" do
-            data.size.should == 13
-            data.last.should == User.all.sum(:value)
+            data.size.should == expected_data_size
+            data[-2].should == User.all.sum(:value)
           end
         end
       end
@@ -136,11 +126,25 @@ module Prosperity
         end
 
         describe "#to_a" do
-          let(:data) { subject.to_a }
-
           it "returns the one entry per period" do
-            data.size.should == 13
-            data.last.should == User.all.sum(:value)
+            data.size.should == expected_data_size
+            data[-2].should == User.all.sum(:value)
+          end
+        end
+      end
+
+      context "ruby block" do
+        let(:metric) do
+          Class.new(Metric) do
+            value_at do |time, period, *|
+              10
+            end
+          end.new
+        end
+
+        describe "#to_a" do
+          it "delegates to the ruby block" do
+            data.should == [0] * expected_data_size
           end
         end
       end

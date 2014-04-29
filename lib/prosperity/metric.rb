@@ -29,7 +29,15 @@ module Prosperity
       if block_given?
         @options[name] = Metrics::Option.new(name, &block)
       else
-        raise MissingScope.new 
+        raise MissingScope.new
+      end
+    end
+
+    def self.value_at(&block)
+      if block_given?
+        @value_at = block
+      else
+        @value_at or raise MissingValueAt
       end
     end
 
@@ -64,6 +72,10 @@ module Prosperity
       @sql.present?
     end
 
+    def self.ruby?
+      @value_at.present?
+    end
+
     def extractors
       self.class.extractors.values
     end
@@ -78,6 +90,10 @@ module Prosperity
 
     def sql
       self.class.sql
+    end
+
+    def value_at
+      self.class.value_at
     end
 
     def options
@@ -98,6 +114,10 @@ module Prosperity
 
     def sql?
       self.class.sql?
+    end
+
+    def ruby?
+      self.class.ruby?
     end
 
     private

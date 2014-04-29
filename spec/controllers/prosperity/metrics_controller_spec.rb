@@ -53,7 +53,7 @@ module Prosperity
         response.should be_success
         json['data'].should == [1,2,3]
         json['key'].should == 'total'
-        DateTime.parse(json['start_time']).to_i.should == 3.months.ago.to_i
+        (DateTime.parse(json['start_time']).to_i - 3.months.ago.to_i).should be <= 1.hour
         json['period_milliseconds'].should == 1.week.to_i * 1000
       end
 
