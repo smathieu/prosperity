@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prosperity (0.0.1)
+    prosperity (0.0.2)
       jquery-rails
       rails (> 3.2.0)
 
