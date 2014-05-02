@@ -14,7 +14,7 @@ module Prosperity
           times << start_time
         end
 
-        times.should == Array.new(6) { |i| DateTime.new(2012, 01, i + 1) }
+        times.should == Array.new(7) { |i| DateTime.new(2012, 01, i + 1) }
       end
     end
   end
