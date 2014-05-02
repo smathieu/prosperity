@@ -45,7 +45,8 @@ module Prosperity
         data: ext.to_a,
         key: ext.key,
         label: ext.label,
-        start_time: start_time.iso8601,
+        start_time: p.actual_start_time(start_time).iso8601,
+        end_time: p.actual_end_time(end_time).iso8601,
         period_milliseconds: p.duration * 1000
       }
       render json: json

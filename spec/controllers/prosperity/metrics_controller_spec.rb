@@ -46,6 +46,14 @@ module Prosperity
         json['data'].should == [1,2,3]
       end
 
+      it "returns the actual start and end time" do
+        Extractors::Interval.any_instance.stub(to_a: [1,2,3])
+        get :data, id: metric.id, format: 'json'
+        response.should be_success
+        json['start_time'].should be_present
+        json['end_time'].should be_present
+      end
+
       it "lets you specify any extractor key" do
         Extractors::Total.any_instance.stub(to_a: [1,2,3])
 
