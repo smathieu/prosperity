@@ -18,6 +18,7 @@ class SubGraph
           xkey: "x"
           ykeys: []
           labels: []
+          smooth: false
 
         chartOptions.postUnits = '%' if json.key == 'change'
 
