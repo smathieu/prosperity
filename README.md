@@ -118,4 +118,4 @@ This project rocks and uses MIT-LICENSE.
 
 ## TODO
 
-See [Issues](https://github.com/smathieu/prosperity/issues?labels=enhancement&page=1&state=open)
+See [Issues](https://github.com/smathieu/prosperity/issues)
