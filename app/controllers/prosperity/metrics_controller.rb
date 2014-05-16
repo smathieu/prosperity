@@ -48,6 +48,7 @@ module Prosperity
       json = {
         data: ext.to_a,
         key: ext.key,
+        uid: ext.uid,
         label: ext.label,
         start_time: p.actual_start_time(start_time).iso8601,
         end_time: p.actual_end_time(end_time).iso8601,

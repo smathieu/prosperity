@@ -11,11 +11,11 @@ module Prosperity
     end
 
     def show
-      @dashboard = Dashboard.find(params[:id])
+      dashboard
     end
 
     def edit
-      @dashboard = Dashboard.find(params[:id])
+      dashboard
     end
 
     def create
@@ -23,11 +23,22 @@ module Prosperity
       @dashboard.title = params.fetch(:dashboard, {})[:title]
       @dashboard.default = false
       if @dashboard.save
-        redirect_to action: :index
+        redirect_to edit_dashboard_path(@dashboard)
       else
         flash[:error] = @dashboard.errors.full_messages.to_sentence
         render action: :new
       end
+    end
+
+    def destroy
+      dashboard.destroy
+      redirect_to action: 'index'
+    end
+
+    private
+
+    def dashboard
+      @dashboard ||= Dashboard.find(params[:id])
     end
   end
 end
