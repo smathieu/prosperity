@@ -17,21 +17,29 @@ module Prosperity
     end
 
     def show
-      render json: {
-        title: @graph.title,
-        graph_type: @graph.graph_type,
-        extractors: @graph.graph_lines.map do |line|
-          {
-            key: line.extractor,
-            url: data_metric_path(id: line.metric, 
-                                  extractor: line.extractor, 
-                                  option: line.option, 
-                                  period: @graph.period, 
-                                  start_time: start_time, 
-                                  end_time: end_time),
+      respond_to do |format|
+        format.json do
+          render json: {
+            title: @graph.title,
+            graph_type: @graph.graph_type,
+            extractors: @graph.graph_lines.map do |line|
+              {
+                key: line.extractor,
+                url: data_metric_path(id: line.metric, 
+                                      extractor: line.extractor, 
+                                      option: line.option, 
+                                      period: @graph.period, 
+                                      start_time: start_time, 
+                                      end_time: end_time),
+              }
+            end
           }
         end
-      }
+
+        format.html {
+          render layout: 'prosperity/embedabble'
+        }
+      end
     end
 
     def update

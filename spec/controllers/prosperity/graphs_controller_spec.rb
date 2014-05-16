@@ -49,20 +49,38 @@ module Prosperity
     end
 
     describe "GET 'show'" do
-      it "renders the JSON representation of the graph" do
-        get :show, id: graph.id
-        response.should be_success
-        json['title'].should == graph.title
-        json['extractors'].should == []
+      context "in JSON" do
+        it "renders the JSON representation of the graph" do
+          get :show, id: graph.id, format: 'json'
+          response.should be_success
+          json['title'].should == graph.title
+          json['extractors'].should == []
+        end
+
+        it "returns one extractor per graph line" do
+          get :show, id: graph_w_line, format: 'json'
+          response.should be_success
+          json['extractors'].count.should == 1
+          ext = json['extractors'].first
+          ext['key'].should == valid_line_attributes[:extractor]
+          ext['url'].should be_present
+        end
       end
 
-      it "returns one extractor per graph line" do
-        get :show, id: graph_w_line
-        response.should be_success
-        json['extractors'].count.should == 1
-        ext = json['extractors'].first
-        ext['key'].should == valid_line_attributes[:extractor]
-        ext['url'].should be_present
+      context "as embedabble HTML" do
+        before do
+          get :show, id: graph.id, format: 'html'
+          response.should be_success
+        end
+
+        it "renders html" do
+          response.content_type.should == 'text/html'
+          response.body.should include('metric dashboard')
+        end
+
+        it "should render the embedabble layout" do
+          response.body.should_not include('navbar')
+        end
       end
     end
 

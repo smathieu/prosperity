@@ -44,6 +44,15 @@
   <div class="span8">
     <div class="graph well"/>
       <div class="metric dashboard" data-url="<%= graph_path(@graph) %>"></div>
+    </div>
+
+    <div>
+      <p>
+      You can embed this graph by embedding the following snippet in your web page.
+      </p>
+      <input disabled value='<iframe height="400px" src="<%= graph_url(@graph) %>" style="border: none;" width="512px"></iframe>' />
+      
+    </div>
   </div>
 </div>
 
