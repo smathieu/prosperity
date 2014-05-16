@@ -19,6 +19,8 @@ class SubGraph
           ykeys: []
           labels: []
 
+        chartOptions.postUnits = '%' if json.key == 'change'
+
         chart = new Morris.Line(chartOptions)
         data = []
 
