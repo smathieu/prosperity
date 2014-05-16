@@ -1,60 +1,80 @@
 class SubGraph
-  constructor: (options) ->
-    @url = options.url
+  constructor: (options = {}) ->
+    @el = $('<div>', class: 'sub-graph')
+    @el.append("<div class='title'>Loading...</div>")
 
-  render: ->
-    el = $('<div>', class: 'sub-graph')
-    el.append("<div class='title'>Loading...</div>")
+    @el.find('.title').html(options.label)
+
     chartEl = $('<div>', class: 'sub-graph-chart')
-    el.append(chartEl)
+    @el.append(chartEl)
 
-    getSeries = (url) =>
-      $.get url, (json) =>
-        el.find('.title').html(json.label)
+    @data = []
+    @chartOptions =
+      element: chartEl
+      series: []
+      xkey: "x"
+      ykeys: []
+      labels: []
+      smooth: false
+      data: @data
 
-        chartOptions =
-          element: chartEl
-          series: []
-          xkey: "x"
-          ykeys: []
-          labels: []
-          smooth: false
+    @chartOptions.postUnits = '%' if options.key == 'change'
 
-        chartOptions.postUnits = '%' if json.key == 'change'
+  addSeries: (json) ->
+    data = @data
 
-        chart = new Morris.Line(chartOptions)
-        data = []
+    start_time = Date.parse(json.start_time)
+    for point, i in json.data
+      time = start_time + i * json.period_milliseconds
+      data[i] ||= {
+        x: time
+      }
+      data[i][json.key] = point
 
-        start_time = Date.parse(json.start_time)
-        for point, i in json.data
-          time = start_time + i * json.period_milliseconds
-          data[i] ||= {
-            x: time
-          }
-          data[i][json.key] = point
+    @chartOptions.ykeys.push(json.key)
+    @chartOptions.labels.push(json.key)
 
-        chart.options.ykeys.push(json.key)
-        chart.options.labels.push(json.key)
+    @el
 
-        chart.setData data.slice(), redraw = true
-
-    getSeries(@url)
-    el
-
+  draw: ->
+    # Because of a bug in Morris (https://github.com/morrisjs/morris.js/issues/388) 
+    # it's not possible to add data on a hidden element. We just redraw the
+    # entire thing in the meantime.
+    @chart = new Morris.Line(@chartOptions)
 
 class Graph
   constructor: (options) ->
     @url = options.url
     @el = options.el
     @$el = $(options.el)
+    console.log(@$el)
 
   render: =>
     $.getJSON @url, (json) =>
       for extractor, index in json.extractors
-        subgraph = new SubGraph(url: extractor.url)
-        el = subgraph.render()
-        @$el.append(el)
+        $.get extractor.url, (line_json) =>
+          subgraph = @getSubgraph(label: line_json.label, key: line_json.key)
+          subgraph.addSeries(line_json)
+
+          if @$el.hasClass('dashboard')
+            if subgraph.chartOptions.ykeys.length == json.extractors.length
+              subgraph.draw()
+          else
+            subgraph.draw()
+
     @
+
+  getSubgraph: (options) =>
+    create = => 
+      subgraph = new SubGraph(options)
+      @$el.append(subgraph.el)
+      subgraph
+
+    # Render 1 subgraph if it's a dashboard graph, mulltiple otherwise.
+    if @$el.hasClass('dashboard')
+      @subGraph ||= create()
+    else
+      create()
 
 @Prosperity ||= {}
 @Prosperity.Graph = Graph
