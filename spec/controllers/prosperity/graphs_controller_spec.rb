@@ -8,6 +8,7 @@ module Prosperity
       {
         title: "My Graph",
         period: "month",
+        graph_type: 'line',
       }
     end
 

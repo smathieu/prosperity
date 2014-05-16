@@ -1,10 +1,18 @@
 <h1>Edit Graph</h1>
 
-<p>Title: <%= @graph.title%></p>
-
 <div class="row">
   <div class="span6">
     <%= form_for @graph, data: {metric_options: @options} do |f| %>
+      <div class="form-group">
+        <%= f.label :title %>
+        <%= f.text_field :title %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :graph_type %>
+        <%= f.select :graph_type, Prosperity::Graph::VALID_GRAPH_TYPES %>
+      </div>
+
       <h4>Lines</h4>
       <%= f.fields_for :graph_lines do |l| %>
         <% if l.object.new_record? %>
@@ -35,7 +43,7 @@
 
   <div class="span8">
     <div class="graph well"/>
-      <div class="metric" data-url="<%= graph_path(@graph) %>"></div>
+      <div class="metric dashboard" data-url="<%= graph_path(@graph) %>"></div>
   </div>
 </div>
 

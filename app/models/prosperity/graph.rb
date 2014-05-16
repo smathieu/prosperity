@@ -4,9 +4,12 @@ module Prosperity
     validates_presence_of :title, :period
     accepts_nested_attributes_for :graph_lines, reject_if: :not_filled?
 
-    ATTR_ACCESSIBLE = [:title, :period, :graph_lines].freeze
+    ATTR_ACCESSIBLE = [:title, :period, :graph_lines, :graph_type].freeze
 
     attr_accessible *ATTR_ACCESSIBLE unless defined?(ActionController::StrongParameters)
+
+    VALID_GRAPH_TYPES = %w(line area)
+    validates :graph_type, inclusion: {in: VALID_GRAPH_TYPES}
 
     private
     def not_filled?(line)

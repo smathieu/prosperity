@@ -1,6 +1,8 @@
 class SubGraph
   constructor: (options = {}) ->
     @el = $('<div>', class: 'sub-graph')
+    @graphType = options.graphType
+
     if options.showTitle
       @el.append("<div class='title'>Loading...</div>")
 
@@ -37,11 +39,17 @@ class SubGraph
 
     @el
 
+  class: =>
+    if @graphType == 'area'
+      Morris.Area
+    else
+      Morris.Line
+
   draw: ->
     # Because of a bug in Morris (https://github.com/morrisjs/morris.js/issues/388) 
     # it's not possible to add data on a hidden element. We just redraw the
     # entire thing in the meantime.
-    @chart = new Morris.Line(@chartOptions)
+    @chart = new @class()(@chartOptions)
 
 class Graph
   constructor: (options) ->
@@ -54,7 +62,11 @@ class Graph
     $.getJSON @url, (json) =>
       for extractor, index in json.extractors
         $.get extractor.url, (line_json) =>
-          subgraph = @getSubgraph(label: line_json.label, key: line_json.key)
+          subgraph = @getSubgraph
+            label: line_json.label
+            key: line_json.key
+            graphType: json.graph_type
+
           subgraph.addSeries(line_json)
 
           if @$el.hasClass('dashboard')
@@ -100,5 +112,4 @@ $(document).on "change", ".edit_graph .metric-title-select select", (e) ->
 $ ->
   $(".edit_graph .metric-title-select select").each (i, el) ->
     updateMetricOptions el
-  
 
