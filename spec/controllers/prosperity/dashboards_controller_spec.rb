@@ -41,13 +41,24 @@ module Prosperity
         expect do
           post 'create', dashboard: {title: 'test'}
         end.to change(Dashboard, :count).by(1)
-        response.should redirect_to(action: :index)
+        dashboard = assigns(:dashboard)
+        dashboard.should be_a(Dashboard)
+        response.should redirect_to(edit_dashboard_path(dashboard))
       end
 
       it "should handle validation error" do
         post 'create', dashboard: {title: ''}
         response.status.should == 200
         flash[:error].should be_present
+      end
+    end
+
+    describe "DELETE 'destroy'" do
+      it "deleted the dashboard" do
+        delete 'destroy', id: dashboard.id
+        response.should redirect_to(dashboards_path)
+
+        Dashboard.find_by(id: dashboard.id).should be_nil
       end
     end
   end
