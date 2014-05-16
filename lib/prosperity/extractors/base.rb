@@ -1,5 +1,5 @@
 module Prosperity
-  class Extractors::Base 
+  class Extractors::Base
     attr_reader :metric, :start_time, :end_time, :period, :option
 
     def initialize(metric, option, start_time, end_time, period)
@@ -13,6 +13,10 @@ module Prosperity
 
     def key
       self.class.key
+    end
+
+    def uid
+      "#{@metric.to_s.underscore}_#{@option}_#{key}"
     end
 
     def label

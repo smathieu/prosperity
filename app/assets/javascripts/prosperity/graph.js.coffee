@@ -1,7 +1,8 @@
 class SubGraph
   constructor: (options = {}) ->
     @el = $('<div>', class: 'sub-graph')
-    @el.append("<div class='title'>Loading...</div>")
+    if options.showTitle
+      @el.append("<div class='title'>Loading...</div>")
 
     @el.find('.title').html(options.label)
 
@@ -29,10 +30,10 @@ class SubGraph
       data[i] ||= {
         x: time
       }
-      data[i][json.key] = point
+      data[i][json.uid] = point
 
-    @chartOptions.ykeys.push(json.key)
-    @chartOptions.labels.push(json.key)
+    @chartOptions.ykeys.push(json.uid)
+    @chartOptions.labels.push(json.uid)
 
     @el
 
@@ -65,16 +66,16 @@ class Graph
     @
 
   getSubgraph: (options) =>
-    create = => 
+    create = (options) => 
       subgraph = new SubGraph(options)
       @$el.append(subgraph.el)
       subgraph
 
     # Render 1 subgraph if it's a dashboard graph, mulltiple otherwise.
     if @$el.hasClass('dashboard')
-      @subGraph ||= create()
+      @subGraph ||= create(options)
     else
-      create()
+      create($.extend(options, showTitle: true))
 
 @Prosperity ||= {}
 @Prosperity.Graph = Graph
