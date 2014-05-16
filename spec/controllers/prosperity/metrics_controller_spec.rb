@@ -95,6 +95,12 @@ module Prosperity
         response.code.to_i.should == 404
         json['error'].should be_present
       end
+
+      it "returns 404 for a known metric, but unknowd extractor" do
+        get :data, id: metric.id, extractor: 'does-not-exist', format: 'json'
+        response.code.to_i.should == 404
+        json['error'].should be_present
+      end
     end
   end
 end
