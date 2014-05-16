@@ -6,59 +6,68 @@ class Graph
     @$el = $(option.el)
 
   render: ->
-    highchartsOptions = 
-      chart:
-        type: 'line'
-        renderTo: @el
-      tooltip:
-        crosshairs: [true, true]
+    chartOptions =
+      element: @el
       series: []
-      xAxis: 
-        type: 'datetime'
-        dateTimeLabelFormats:
-          day: '%e of %b'
-      yAxis: [{}, {}, {}]
-      title: 
-        text: "Loading..."
+      xkey: "x"
+      ykeys: []
+      labels: []
 
-    chart = new Highcharts.Chart(highchartsOptions)
+    data = []
 
-    getSeries = (url, axisIndex) =>
+    chart = new Morris.Line(chartOptions)
+
+    getSeries = (config, url, axisIndex) =>
       $.get url, (json) =>
-        axisIndex = Math.min(axisIndex, chart.yAxis.length - 1)
-        serie = 
-          data: json.data
-          name: json.label
-          yAxis: axisIndex
-          pointStart: Date.parse(json.start_time)
-          pointInterval: json.period_milliseconds
-
-        axisSettings = 
-          title: {text: json.key}
-          min: Math.min.apply(Math, json.data)
-          max: Math.max.apply(Math, json.data)
-      
-
-        if json.key == 'change'
-          axisSettings = $.extend axisSettings, {
-            min: 0,
-            max: Math.max.apply(Math, json.data),
-            labels: {formatter: -> this.value + '%' },
-            opposite: true
+        start_time = Date.parse(json.start_time)
+        for point, i in json.data
+          time = start_time + i * json.period_milliseconds
+          data[i] ||= {
+            x: time
           }
+          data[i][json.key] = point
 
-          serie = $.extend serie, {
-            tooltip: {valueDecimals: 2, valueSuffix: '%'}
-          }
 
-        chart.yAxis[axisIndex].update(axisSettings)
-        chart.addSeries(serie)
+        console.log(config)
+        console.log(chart.data)
+        chart.options.ykeys.push(json.key)
+        chart.options.labels.push(json.key)
+
+        chart.setData data.slice(), redraw = true
+
+        # axisIndex = Math.min(axisIndex, chart.yAxis.length - 1)
+        # serie = 
+        #   data: json.data
+        #   name: json.label
+        #   yAxis: axisIndex
+        #   pointStart: Date.parse(json.start_time)
+        #   pointInterval: json.period_milliseconds
+
+        # axisSettings = 
+        #   title: {text: json.key}
+        #   min: Math.min.apply(Math, json.data)
+        #   max: Math.max.apply(Math, json.data)
+
+        # if json.key == 'change'
+        #   axisSettings = $.extend axisSettings, {
+        #     min: 0,
+        #     max: Math.max.apply(Math, json.data),
+        #     labels: {formatter: -> this.value + '%' },
+        #     opposite: true
+        #   }
+
+        #   serie = $.extend serie, {
+        #     tooltip: {valueDecimals: 2, valueSuffix: '%'}
+        #   }
+
+        # chart.yAxis[axisIndex].update(axisSettings)
+        # chart.addSeries(serie)
 
     $.getJSON @url, (json) ->
-      chart.setTitle {text: json.title}
+      #chart.setTitle {text: json.title}
 
       for extractor, index in json.extractors
-        getSeries(extractor.url, index)
+        getSeries(json, extractor.url, index)
         
     @
   
