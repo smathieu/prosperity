@@ -3,10 +3,8 @@
   They will automatically be included in application.css.
 */
 
-.sub-graph {
-  .title {
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-  }
+.sub-graph .title, .metric-title {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
 }
