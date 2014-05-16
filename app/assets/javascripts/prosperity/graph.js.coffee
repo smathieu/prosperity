@@ -1,24 +1,27 @@
-
-class Graph
-  constructor: (option) ->
-    @url = option.url
-    @el = option.el
-    @$el = $(option.el)
+class SubGraph
+  constructor: (options) ->
+    @url = options.url
 
   render: ->
-    chartOptions =
-      element: @el
-      series: []
-      xkey: "x"
-      ykeys: []
-      labels: []
+    el = $('<div>', class: 'sub-graph')
+    el.append("<div class='title'>Loading...</div>")
+    chartEl = $('<div>', class: 'sub-graph-chart')
+    el.append(chartEl)
 
-    data = []
-
-    chart = new Morris.Line(chartOptions)
-
-    getSeries = (config, url, axisIndex) =>
+    getSeries = (url) =>
       $.get url, (json) =>
+        el.find('.title').html(json.label)
+
+        chartOptions =
+          element: chartEl
+          series: []
+          xkey: "x"
+          ykeys: []
+          labels: []
+
+        chart = new Morris.Line(chartOptions)
+        data = []
+
         start_time = Date.parse(json.start_time)
         for point, i in json.data
           time = start_time + i * json.period_milliseconds
@@ -27,50 +30,29 @@ class Graph
           }
           data[i][json.key] = point
 
-
-        console.log(config)
-        console.log(chart.data)
         chart.options.ykeys.push(json.key)
         chart.options.labels.push(json.key)
 
         chart.setData data.slice(), redraw = true
 
-        # axisIndex = Math.min(axisIndex, chart.yAxis.length - 1)
-        # serie = 
-        #   data: json.data
-        #   name: json.label
-        #   yAxis: axisIndex
-        #   pointStart: Date.parse(json.start_time)
-        #   pointInterval: json.period_milliseconds
+    getSeries(@url)
+    el
 
-        # axisSettings = 
-        #   title: {text: json.key}
-        #   min: Math.min.apply(Math, json.data)
-        #   max: Math.max.apply(Math, json.data)
 
-        # if json.key == 'change'
-        #   axisSettings = $.extend axisSettings, {
-        #     min: 0,
-        #     max: Math.max.apply(Math, json.data),
-        #     labels: {formatter: -> this.value + '%' },
-        #     opposite: true
-        #   }
+class Graph
+  constructor: (options) ->
+    @url = options.url
+    @el = options.el
+    @$el = $(options.el)
 
-        #   serie = $.extend serie, {
-        #     tooltip: {valueDecimals: 2, valueSuffix: '%'}
-        #   }
-
-        # chart.yAxis[axisIndex].update(axisSettings)
-        # chart.addSeries(serie)
-
-    $.getJSON @url, (json) ->
-      #chart.setTitle {text: json.title}
-
+  render: =>
+    $.getJSON @url, (json) =>
       for extractor, index in json.extractors
-        getSeries(json, extractor.url, index)
-        
+        subgraph = new SubGraph(url: extractor.url)
+        el = subgraph.render()
+        @$el.append(el)
     @
-  
+
 @Prosperity ||= {}
 @Prosperity.Graph = Graph
 
