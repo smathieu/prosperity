@@ -26,3 +26,7 @@ end
 group :development do
   gem "lib-generator"
 end
+
+group :test do
+  gem "shoulda-matchers"
+end

@@ -5,7 +5,7 @@ module Prosperity
     routes { Prosperity::Engine.routes }
 
     let(:valid_graph_attributes) do
-      { title: "My Graph", period: "month" }
+      { title: "My Graph", period: "month", graph_type: 'line' }
     end
 
     let!(:valid_dashboard_attributes) do

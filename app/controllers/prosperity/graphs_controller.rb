@@ -19,6 +19,7 @@ module Prosperity
     def show
       render json: {
         title: @graph.title,
+        graph_type: @graph.graph_type,
         extractors: @graph.graph_lines.map do |line|
           {
             key: line.extractor,
@@ -42,7 +43,7 @@ module Prosperity
 
     def create
       @graph = Graph.new
-      [:title, :period].each do |attr|
+      [:title, :period, :graph_type].each do |attr|
         @graph.send("#{attr}=", graph_params[attr])
       end
 
@@ -53,7 +54,7 @@ module Prosperity
         render action: :new
       end
     end
-    
+
     private
 
     def get_graph
@@ -65,7 +66,7 @@ module Prosperity
         params.require(:graph).
           permit(Graph::ATTR_ACCESSIBLE + [:graph_lines_attributes => (GraphLine::ATTR_ACCESSIBLE + [:id])])
       else
-        params.fetch(:graph, {})     
+        params.fetch(:graph, {})
       end
     end
   end
