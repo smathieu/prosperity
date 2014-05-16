@@ -12,7 +12,8 @@
 #
 #= require jquery
 #= require jquery_ujs
-#= require highcharts
+#= require morris.min-0.5
+#= require raphael-min-2.1.2
 #= require_tree .
 
 $ ->

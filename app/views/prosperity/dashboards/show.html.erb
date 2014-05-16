@@ -5,10 +5,14 @@
   <%= submit_tag "Update", class: 'btn btn-primary' %>
 <% end %>
 
+<% if @dashboard.graphs.empty? %>
+  <p>No Graphs</p>
+<% end %>
+
 <% @dashboard.graphs.each do |graph| %>
-  <div class="graph">
+  <div class="graph dashboard-graph">
     <h2><%= graph.title %></h2>
 
-    <div class="metric" data-url="<%= graph_path(graph, start_time: start_time) %>"></div>
+    <div class="metric dashboard" data-url="<%= graph_path(graph, start_time: start_time) %>"></div>
   </div>
 <% end %>

@@ -36,7 +36,11 @@ module Prosperity
     end
 
     def data
-      ext_klass = Metric.extractors[params.fetch(:extractor, "interval")]
+      ext_name = params.fetch(:extractor, "interval")
+      ext_klass = Metric.extractors.fetch(ext_name) do
+        render_json_error "Could not find extractor #{ext_name} for #{@metric}. Possible values are #{Metric.extractors.keys.join(", ")}.", 404
+        return
+      end
 
       p = Prosperity::Periods::ALL.fetch(period)
       ext = ext_klass.new(@metric, option, start_time, end_time, p)

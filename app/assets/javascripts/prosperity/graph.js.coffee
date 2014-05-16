@@ -1,67 +1,81 @@
+class SubGraph
+  constructor: (options = {}) ->
+    @el = $('<div>', class: 'sub-graph')
+    @el.append("<div class='title'>Loading...</div>")
+
+    @el.find('.title').html(options.label)
+
+    chartEl = $('<div>', class: 'sub-graph-chart')
+    @el.append(chartEl)
+
+    @data = []
+    @chartOptions =
+      element: chartEl
+      series: []
+      xkey: "x"
+      ykeys: []
+      labels: []
+      smooth: false
+      data: @data
+
+    @chartOptions.postUnits = '%' if options.key == 'change'
+
+  addSeries: (json) ->
+    data = @data
+
+    start_time = Date.parse(json.start_time)
+    for point, i in json.data
+      time = start_time + i * json.period_milliseconds
+      data[i] ||= {
+        x: time
+      }
+      data[i][json.key] = point
+
+    @chartOptions.ykeys.push(json.key)
+    @chartOptions.labels.push(json.key)
+
+    @el
+
+  draw: ->
+    # Because of a bug in Morris (https://github.com/morrisjs/morris.js/issues/388) 
+    # it's not possible to add data on a hidden element. We just redraw the
+    # entire thing in the meantime.
+    @chart = new Morris.Line(@chartOptions)
 
 class Graph
-  constructor: (option) ->
-    @url = option.url
-    @el = option.el
-    @$el = $(option.el)
+  constructor: (options) ->
+    @url = options.url
+    @el = options.el
+    @$el = $(options.el)
+    console.log(@$el)
 
-  render: ->
-    highchartsOptions = 
-      chart:
-        type: 'line'
-        renderTo: @el
-      tooltip:
-        crosshairs: [true, true]
-      series: []
-      xAxis: 
-        type: 'datetime'
-        dateTimeLabelFormats:
-          day: '%e of %b'
-      yAxis: [{}, {}, {}]
-      title: 
-        text: "Loading..."
-
-    chart = new Highcharts.Chart(highchartsOptions)
-
-    getSeries = (url, axisIndex) =>
-      $.get url, (json) =>
-        axisIndex = Math.min(axisIndex, chart.yAxis.length - 1)
-        serie = 
-          data: json.data
-          name: json.label
-          yAxis: axisIndex
-          pointStart: Date.parse(json.start_time)
-          pointInterval: json.period_milliseconds
-
-        axisSettings = 
-          title: {text: json.key}
-          min: Math.min.apply(Math, json.data)
-          max: Math.max.apply(Math, json.data)
-      
-
-        if json.key == 'change'
-          axisSettings = $.extend axisSettings, {
-            min: 0,
-            max: Math.max.apply(Math, json.data),
-            labels: {formatter: -> this.value + '%' },
-            opposite: true
-          }
-
-          serie = $.extend serie, {
-            tooltip: {valueDecimals: 2, valueSuffix: '%'}
-          }
-
-        chart.yAxis[axisIndex].update(axisSettings)
-        chart.addSeries(serie)
-
-    $.getJSON @url, (json) ->
-      chart.setTitle {text: json.title}
-
+  render: =>
+    $.getJSON @url, (json) =>
       for extractor, index in json.extractors
-        getSeries(extractor.url, index)
-        
+        $.get extractor.url, (line_json) =>
+          subgraph = @getSubgraph(label: line_json.label, key: line_json.key)
+          subgraph.addSeries(line_json)
+
+          if @$el.hasClass('dashboard')
+            if subgraph.chartOptions.ykeys.length == json.extractors.length
+              subgraph.draw()
+          else
+            subgraph.draw()
+
     @
-  
+
+  getSubgraph: (options) =>
+    create = => 
+      subgraph = new SubGraph(options)
+      @$el.append(subgraph.el)
+      subgraph
+
+    # Render 1 subgraph if it's a dashboard graph, mulltiple otherwise.
+    if @$el.hasClass('dashboard')
+      @subGraph ||= create()
+    else
+      create()
+
 @Prosperity ||= {}
 @Prosperity.Graph = Graph
 

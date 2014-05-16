@@ -112,6 +112,10 @@ module Prosperity
       self.class.name
     end
 
+    def to_s
+      id
+    end
+
     def sql?
       self.class.sql?
     end
