@@ -2,7 +2,7 @@ require_dependency "prosperity/application_controller"
 
 module Prosperity
   class GraphsController < ApplicationController
-    before_action :get_graph, only: [:edit, :update, :show]
+    before_action :get_graph, only: [:edit, :update]
     def new
       @graph = Graph.new
     end
@@ -19,6 +19,7 @@ module Prosperity
     def show
       respond_to do |format|
         format.json do
+          get_graph
           render json: {
             title: @graph.title,
             graph_type: @graph.graph_type,
@@ -37,6 +38,13 @@ module Prosperity
         end
 
         format.html {
+          begin
+            get_graph
+          rescue ActiveRecord::RecordNotFound
+            @graph = nil
+            render layout: 'prosperity/embedabble', status: :not_found
+            return
+          end
           render layout: 'prosperity/embedabble'
         }
       end

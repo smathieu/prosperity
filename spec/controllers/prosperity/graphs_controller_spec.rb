@@ -81,6 +81,12 @@ module Prosperity
         it "should render the embedabble layout" do
           response.body.should_not include('navbar')
         end
+
+        it "404 with custom page when graph is not found" do
+          get :show, id: :unknown_id, format: 'html'
+          response.status.should == 404
+          response.body.should include("No such graph")
+        end
       end
     end
 

@@ -1,3 +1,6 @@
-<div class='metric-title'><%= @graph.title %></div>
-<div class="metric dashboard" data-url="<%= graph_path(@graph) %>"></div>
-
+<% if @graph %>
+  <div class='metric-title'><%= @graph.title %></div>
+  <div class="metric dashboard" data-url="<%= graph_path(@graph) %>"></div>
+<% else %>
+  <p>No such graph</p>
+<% end %>
