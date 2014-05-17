@@ -25,6 +25,13 @@ module Prosperity
         dg.graph.should == graph
         dg.dashboard.should == dashboard
       end
+
+      it "errors if you try to add the same graph twice" do
+        post :create, dashboard_id: dashboard.id, graph_id: graph.id
+        post :create, dashboard_id: dashboard.id, graph_id: graph.id
+        response.should redirect_to(edit_dashboard_path(dashboard))
+        flash[:error].should be_present
+      end
     end
 
     describe "DELETE 'destroy'" do

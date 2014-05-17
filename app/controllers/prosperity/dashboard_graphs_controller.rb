@@ -4,8 +4,12 @@ module Prosperity
   class DashboardGraphsController < ApplicationController
     before_action :get_objs
     def create
-      DashboardGraph.create!(graph: @graph, dashboard: @dashboard)
-      redirect_to edit_dashboard_path(@dashboard)  
+      dashboard_graph = DashboardGraph.new(graph: @graph, dashboard: @dashboard)
+
+      unless dashboard_graph.save
+        set_error(dashboard_graph)
+      end
+      redirect_to edit_dashboard_path(@dashboard)
     end
 
     def destroy
