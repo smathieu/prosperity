@@ -16,3 +16,7 @@
     <div class="metric dashboard" data-url="<%= graph_path(graph, start_time: start_time) %>"></div>
   </div>
 <% end %>
+
+<p>
+  <%= link_to "Edit this dashboard", edit_dashboard_path(@dashboard) %>
+</p>
