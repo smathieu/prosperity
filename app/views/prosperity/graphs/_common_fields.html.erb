@@ -1,0 +1,14 @@
+<div class="form-group">
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+</div>
+
+<div class="form-group">
+  <%= f.label :graph_type %>
+  <%= f.select :graph_type, Prosperity::Graph::VALID_GRAPH_TYPES %>
+</div>
+
+<div class="form-group">
+  <%= f.label :period %>
+  <%= f.select :period, Prosperity::Periods::ALL.keys %>
+</div>
