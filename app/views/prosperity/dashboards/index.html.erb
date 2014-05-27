@@ -15,7 +15,7 @@
             <td> <%= link_to dashboard.title, dashboard_path(dashboard) %> </td>
             <td> 
               <%= link_to 'Edit', edit_dashboard_path(dashboard), class: 'btn btn-primary' %>
-              <%= link_to 'Delete', dashboard_path(dashboard), method: 'delete', class: 'btn btn-danger' %>
+              <%= link_to 'Delete', dashboard_path(dashboard), method: 'delete', class: 'btn btn-danger', data: {confirm: "Are you sure?"} %>
             </td>
           </tr>  
         <% end %>
@@ -26,4 +26,4 @@
   <% end %>
 </p>
 
-<a href="<%= new_dashboard_path %>" class="btn btn-primary">New Dashboard</a>
+<a href="<%= new_dashboard_path %>" class="btn btn-success">New Dashboard</a>

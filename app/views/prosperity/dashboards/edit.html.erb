@@ -1,4 +1,4 @@
-<h1>Edit Dashboard</h1>
+<h1>Edit Dashboard "<%= @dashboard.title %></h1>
 
 <% if Prosperity::Graph.exists? %>
   <ul>
@@ -14,16 +14,18 @@
   <%= form_tag({}, class: "link-graph", method: "POST") do %>
     <%= hidden_field_tag :dashboard_id, @dashboard.id %>
     <%= hidden_field_tag :url_template, dashboard_dashboard_graphs_path(dashboard_id: 'dashboard_id', graph_id: 'graph_id') %>
-    <%= select_tag :graph_id, options_from_collection_for_select(Prosperity::Graph.all, :id, :title) %>
-    <%= submit_tag "Add To Dashboard", class: 'btn btn-success' %>
+
+    <div class="well">
+      <%= select_tag :graph_id, options_from_collection_for_select(Prosperity::Graph.all, :id, :title) %>
+      <%= submit_tag "Add To Dashboard", class: 'btn btn-primary' %>
+      or
+      <%= link_to "Create New Graph", new_graph_path, class: 'btn btn-success' %>
+    </div>
   <% end %>
 
-  OR 
 <% end %>
 
-<%= link_to "Add New Graph", new_graph_path, class: 'btn btn-primary' %>
-
 <p>
-  <%= link_to "View Dashboard", @dashboard, class: 'btn' %>
+  <%= link_to "View Dashboard", @dashboard, class: 'btn btn-default' %>
 </p>
 
