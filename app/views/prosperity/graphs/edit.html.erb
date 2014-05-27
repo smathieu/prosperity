@@ -8,25 +8,35 @@
 
       <h4>Lines</h4>
       <%= f.fields_for :graph_lines do |l| %>
-        <% if l.object.new_record? %>
-          <h4>Add New Line</h4>
-        <% end %>
+        <div class="deletable-nested-attribute">
+          <% if l.object.new_record? %>
+            <h4>Add New Line</h4>
+          <% end %>
 
-        <div class="graph-line">
-          <div class="form-group metric-title-select">
-            <%= l.label :metric %>
-            <%= l.select :metric, @metrics.map{|m| [m.title, m.id]}, include_blank: true %>
-          </div>
+          <div class="graph-line">
+            <div class="form-group metric-title-select">
+              <%= l.label :metric %>
+              <%= l.select :metric, @metrics.map{|m| [m.title, m.id]}, include_blank: true %>
+            </div>
 
-          <div class="form-group metric-option-select">
-            <%= l.hidden_field :option %>
-            <%= l.label :option %>
-            <%= l.select :option, [] %>
-          </div>
+            <div class="form-group metric-option-select">
+              <%= l.hidden_field :option %>
+              <%= l.label :option %>
+              <%= l.select :option, [] %>
+            </div>
 
-          <div class="form-group">
-            <%= l.label :extractor %>
-            <%= l.select :extractor, options_for_extractors %>
+            <div class="form-group">
+              <%= l.label :extractor %>
+              <%= l.select :extractor, options_for_extractors %>
+            </div>
+
+
+            <% if l.object.persisted? %>
+              <div class="form-group">
+                <%= l.hidden_field :_destroy %>
+                <%= button_tag "Destroy", class: 'btn btn-danger destroy-action' %>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>
@@ -44,7 +54,7 @@
       You can embed this graph by embedding the following snippet in your web page.
       </p>
       <input disabled value='<iframe height="400px" src="<%= graph_url(@graph) %>" style="border: none;" width="512px"></iframe>' />
-      
+
     </div>
   </div>
 </div>

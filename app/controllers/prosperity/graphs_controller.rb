@@ -60,7 +60,7 @@ module Prosperity
     def create
       @graph = Graph.new
       [:title, :period, :graph_type].each do |attr|
-        @graph.send("#{attr}=", graph_params[attr])
+        @graph.public_send("#{attr}=", graph_params[attr])
       end
 
       if @graph.save
@@ -80,7 +80,7 @@ module Prosperity
     def graph_params
       if strong_params?
         params.require(:graph).
-          permit(Graph::ATTR_ACCESSIBLE + [:graph_lines_attributes => (GraphLine::ATTR_ACCESSIBLE + [:id])])
+          permit(Graph::ATTR_ACCESSIBLE + [:graph_lines_attributes => (GraphLine::ATTR_ACCESSIBLE + [:id, :_destroy])])
       else
         params.fetch(:graph, {})
       end

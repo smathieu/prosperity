@@ -142,6 +142,23 @@ module Prosperity
         line.extractor.should == 'interval'
       end
 
+      let(:destroy_line_attrs) do
+        {
+          "graph_lines_attributes" => {
+            "0" => {
+              id: line.id,
+              _destroy: true,
+            }
+          }
+        }
+      end
+
+      it "can destroy an existing line" do
+        put :update, id: graph_w_line.id, graph: destroy_line_attrs
+        response.should be_redirect
+        GraphLine.find_by(id: line.id).should be_nil
+      end
+
       it "updates an existing line while ignoring blank ones" do
         line = graph.graph_lines.create!(valid_line_attributes)
 

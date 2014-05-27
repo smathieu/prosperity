@@ -56,7 +56,6 @@ class Graph
     @url = options.url
     @el = options.el
     @$el = $(options.el)
-    console.log(@$el)
 
   render: =>
     $.getJSON @url, (json) =>

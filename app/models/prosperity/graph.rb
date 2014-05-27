@@ -2,7 +2,7 @@ module Prosperity
   class Graph < ActiveRecord::Base
     has_many :graph_lines, class_name: 'Prosperity::GraphLine'
     validates_presence_of :title, :period
-    accepts_nested_attributes_for :graph_lines, reject_if: :not_filled?
+    accepts_nested_attributes_for :graph_lines, reject_if: :not_filled?, allow_destroy: true
 
     ATTR_ACCESSIBLE = [:title, :period, :graph_lines, :graph_type].freeze
 
