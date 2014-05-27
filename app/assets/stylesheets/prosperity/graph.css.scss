@@ -8,3 +8,13 @@
   font-size: 14px;
   font-weight: bold;
 }
+
+.graph-line {
+  .form-group > label {
+    float: left;
+  }
+  
+  .form-group > input {
+    float: left;
+  }
+}

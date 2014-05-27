@@ -34,7 +34,7 @@
             <% if l.object.persisted? %>
               <div class="form-group">
                 <%= l.hidden_field :_destroy %>
-                <%= button_tag "Destroy", class: 'btn btn-danger destroy-action' %>
+                <%= link_to "Remove", "#", class: 'destroy-action' %>
               </div>
             <% end %>
           </div>
