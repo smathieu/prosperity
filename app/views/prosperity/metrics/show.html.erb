@@ -2,7 +2,7 @@
   <%= @metric.title %>
 </h1>
 
-<%= render_graph @metric %>
+<%= render_graph @metric, start_time: start_time %>
 
 <%= form_tag(metric_path(params[:id]), method: 'get') do %>
   <h2>Settings</h2>

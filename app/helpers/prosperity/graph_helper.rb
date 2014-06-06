@@ -9,11 +9,12 @@ module Prosperity
     end
 
     def render_graph(graph, options = {})
+      path_opts = options.slice(:start_time)
       path = case graph
       when Graph
-        graph_path(graph, start_time: options[:start_time])
+        graph_path(graph, path_opts)
       when Metric
-        metric_path(graph)
+        metric_path(graph, path_opts)
       else
         raise "Unsupported object #{graph.class}"
       end

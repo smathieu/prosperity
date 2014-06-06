@@ -112,6 +112,10 @@ module Prosperity
       self.class.name
     end
 
+    def to_param
+      id
+    end
+
     def to_s
       title
     end
