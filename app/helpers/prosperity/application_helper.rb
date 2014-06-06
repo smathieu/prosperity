@@ -8,6 +8,10 @@ module Prosperity
       link_to metric.new.title, metric_path(id: metric.name)
     end
 
+    def body_class
+      "#{params[:controller]}-#{params[:action]}".gsub(/\//, '-')
+    end
+
     def navbar_item(name, url, *controllers)
       classes = []
 
