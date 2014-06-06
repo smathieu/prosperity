@@ -20,6 +20,7 @@ class SubGraph
       labels: []
       smooth: false
       data: @data
+      hideHover: true
 
     @chartOptions.postUnits = '%' if options.key == 'change'
 
