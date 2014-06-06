@@ -9,3 +9,4 @@ spec/dummy/.sass-cache
 tags
 .DS_Store
 Gemfile.lock
+/tmp

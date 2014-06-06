@@ -1,7 +1,7 @@
 class SubGraph
   constructor: (options = {}) ->
     @el = $('<div>', class: 'sub-graph')
-    @graphType = options.graphType
+    graphType = @graphType = options.graphType
 
     if options.showTitle
       @el.append("<div class='title'>Loading...</div>")
@@ -10,6 +10,20 @@ class SubGraph
 
     chartEl = $('<div>', class: 'sub-graph-chart')
     @el.append(chartEl)
+
+    hoverCallback = (index, options, content, data) ->
+      if graphType == 'area'
+        data = options.data[index]
+
+        sum = 0
+        for key, value of data
+          sum += value unless key == 'x'
+
+        t = "Total: #{sum}"
+
+        content += t
+
+      content
 
     @data = []
     @chartOptions =
@@ -21,6 +35,7 @@ class SubGraph
       smooth: false
       data: @data
       hideHover: true
+      hoverCallback: hoverCallback
 
     @chartOptions.postUnits = '%' if options.key == 'change'
 
