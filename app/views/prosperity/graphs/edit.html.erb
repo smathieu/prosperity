@@ -16,7 +16,7 @@
           <div class="graph-line">
             <div class="form-group metric-title-select">
               <%= l.label :metric %>
-              <%= l.select :metric, @metrics.map{|m| [m.title, m.id]}, include_blank: true %>
+              <%= l.select :metric, options_for_metric(@metrics), include_blank: true %>
             </div>
 
             <div class="form-group metric-option-select">

@@ -97,6 +97,7 @@ updateMetricOptions = (el) ->
   $form = $el.parents('form')
   options = $form.data('metric-options')
   possibleOptions = options[$el.val()] || []
+  possibleOptions = possibleOptions.sort()
 
   $optionSelect = $el.parents(".graph-line").find(".metric-option-select select")
   selectedOption = $form.find("input[type=\"hidden\"][name=\"#{$optionSelect.attr('name')}\"]").val()
