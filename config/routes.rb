@@ -11,5 +11,5 @@ Prosperity::Engine.routes.draw do
 
   resources :graphs
 
-  root to: 'metrics#index'
+  root to: 'dashboards#index'
 end
