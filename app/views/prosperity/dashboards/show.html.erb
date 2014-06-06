@@ -16,7 +16,7 @@
       <%= link_to 'edit', edit_graph_path(graph) %>
     </div>
 
-    <div class="metric dashboard" data-url="<%= graph_path(graph, start_time: start_time) %>"></div>
+    <%= render_graph graph, start_time: start_time, class: 'dashboard' %>
   </div>
 <% end %>
 

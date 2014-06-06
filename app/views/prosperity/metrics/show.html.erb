@@ -2,7 +2,7 @@
   <%= @metric.title %>
 </h1>
 
-<div class="metric" data-url="<%= metric_path(params) %>"></div>
+<%= render_graph @metric %>
 
 <%= form_tag(metric_path(params[:id]), method: 'get') do %>
   <h2>Settings</h2>

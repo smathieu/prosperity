@@ -96,6 +96,7 @@ class Graph
   getSubgraph: (options) =>
     create = (options) => 
       subgraph = new SubGraph(options)
+      @$el.find('.loading').remove()
       @$el.append(subgraph.el)
       subgraph
 

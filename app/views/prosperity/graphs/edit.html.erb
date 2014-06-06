@@ -46,7 +46,7 @@
 
   <div class="span8">
     <div class="graph well"/>
-      <div class="metric dashboard" data-url="<%= graph_path(@graph) %>"></div>
+      <%= render_graph @graph, class: 'dashboard' %>
     </div>
 
     <div>
