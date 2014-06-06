@@ -36,6 +36,7 @@ class SubGraph
       data: @data
       hideHover: true
       hoverCallback: hoverCallback
+      events: [new Date().toISOString()]
 
     @chartOptions.postUnits = '%' if options.key == 'change'
 
