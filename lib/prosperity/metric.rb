@@ -113,7 +113,7 @@ module Prosperity
     end
 
     def to_s
-      id
+      title
     end
 
     def sql?

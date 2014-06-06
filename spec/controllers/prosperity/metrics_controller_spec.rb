@@ -101,6 +101,15 @@ module Prosperity
         response.code.to_i.should == 404
         json['error'].should be_present
       end
+
+      it "handle errors in the metric gracefuly" do
+        metric.class.any_instance.stub(:scope) do
+          1 / 0
+        end
+        get :data, id: metric.id, format: 'json'
+        response.code.to_i.should == 400
+        json['error'].should be_present
+      end
     end
   end
 end

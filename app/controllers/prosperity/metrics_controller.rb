@@ -45,8 +45,16 @@ module Prosperity
       p = Prosperity::Periods::ALL.fetch(period)
       ext = ext_klass.new(@metric, option, start_time, end_time, p)
 
+      data = begin
+        ext.to_a
+      rescue => e
+        logger.error "#{e}\n#{e.backtrace.join("\n")}"
+        render_json_error "An exception occured while retrieving data from #{@metric}. #{e}"
+        return
+      end
+
       json = {
-        data: ext.to_a,
+        data: data,
         key: ext.key,
         uid: ext.uid,
         label: ext.label,
