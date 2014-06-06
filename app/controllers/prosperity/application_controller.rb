@@ -5,7 +5,7 @@ module Prosperity
       flash[:error] = model.errors.full_messages.to_sentence
     end
 
-    def render_json_error(msg, code)
+    def render_json_error(msg, code = 400)
       render json: {error: msg}, status: code
     end
 

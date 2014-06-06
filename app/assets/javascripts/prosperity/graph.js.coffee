@@ -75,23 +75,43 @@ class Graph
     @$el = $(options.el)
 
   render: =>
-    $.getJSON @url, (json) =>
-      for extractor, index in json.extractors
-        $.get extractor.url, (line_json) =>
-          subgraph = @getSubgraph
-            label: line_json.label
-            key: line_json.key
-            graphType: json.graph_type
+    $.ajax
+      url: @url
+      dataType: 'json'
+      success: (json) =>
+        for extractor, index in json.extractors
+          $.ajax
+            url: extractor.url
+            dataType: 'json'
+            success: (line_json) =>
+              subgraph = @getSubgraph
+                label: line_json.label
+                key: line_json.key
+                graphType: json.graph_type
 
-          subgraph.addSeries(line_json)
+              subgraph.addSeries(line_json)
 
-          if @$el.hasClass('dashboard')
-            if subgraph.chartOptions.ykeys.length == json.extractors.length
-              subgraph.draw()
-          else
-            subgraph.draw()
+              if @$el.hasClass('dashboard')
+                if subgraph.chartOptions.ykeys.length == json.extractors.length
+                  subgraph.draw()
+              else
+                subgraph.draw()
+            error: (xhr) =>
+              @displayError(xhr)
+      error: (xhr) =>
+        @displayError(xhr)
 
     @
+
+  displayError: (xhr) ->
+    errorMessage = null
+    if xhr.status >= 400 && xhr.status < 500
+      errorMessage = JSON.parse(xhr.responseText).error
+
+    errorMessage ||= "An unknown server error has occured."
+
+    t = $('<div>', class: 'alert alert-danger', text: errorMessage)
+    @$el.find('.errors').append(t)
 
   getSubgraph: (options) =>
     create = (options) => 
