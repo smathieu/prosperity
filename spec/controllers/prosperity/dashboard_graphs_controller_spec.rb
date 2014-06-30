@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Prosperity
-  describe DashboardGraphsController do
+  describe DashboardGraphsController, type: :controller do
     routes { Prosperity::Engine.routes }
 
     let(:valid_graph_attributes) do
@@ -22,15 +22,15 @@ module Prosperity
           post :create, dashboard_id: dashboard.id, graph_id: graph.id
         end.to change(DashboardGraph, :count).by(1)
         dg = DashboardGraph.last
-        dg.graph.should == graph
-        dg.dashboard.should == dashboard
+        expect(dg.graph).to eq(graph)
+        expect(dg.dashboard).to eq(dashboard)
       end
 
       it "errors if you try to add the same graph twice" do
         post :create, dashboard_id: dashboard.id, graph_id: graph.id
         post :create, dashboard_id: dashboard.id, graph_id: graph.id
-        response.should redirect_to(edit_dashboard_path(dashboard))
-        flash[:error].should be_present
+        expect(response).to redirect_to(edit_dashboard_path(dashboard))
+        expect(flash[:error]).to be_present
       end
     end
 

@@ -8,19 +8,19 @@ module Prosperity
       let(:metrics) { subject.metrics }
 
       it "returns an array" do
-        metrics.should be_an(Array)
+        expect(metrics).to be_an(Array)
       end
 
       it "should contain at least one metric" do
-        metrics.size.should be > 0
-        metrics.first.superclass.should == Metric
+        expect(metrics.size).to be > 0
+        expect(metrics.first.superclass).to eq(Metric)
       end
     end
 
     describe ".find_by_name" do
       it "finds a metric by name" do
         metric = described_class.find_by_name('UsersMetric')
-        metric.should be < Metric
+        expect(metric).to be < Metric
       end
     end
   end

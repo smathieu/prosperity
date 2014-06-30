@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 module Prosperity
-  describe Dashboard do
+  describe Dashboard, type: :model do
   end
 end
