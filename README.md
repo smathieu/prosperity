@@ -23,6 +23,12 @@ bundle
 bundle exec rake db:migrate
 ```
 
+Add initializer:
+
+```
+rails g prosperity:install
+```
+
 Add a route to prosperity in ```config/routes.rb```.
 
 ```ruby
@@ -91,6 +97,28 @@ class RubyUsersMetric < Prosperity::Metric
     User.where("users.created_at <= ?", time).count
   end
 end
+```
+
+## Views
+
+You can render all prosperity views inside your app layout (this will need styling to look nice if you don't use bootstrap):
+
+```ruby
+Rails.application.config.to_prepare do
+  # Use admin layout with prosperity (this will also make app routes accessible within prosperity):
+  Prosperity.layout = 'admin'
+end
+```
+
+## Routing
+
+You can access prosperity urls like this:
+
+```ruby
+# engine root(dashboards page):
+prosperity.root_url
+# list metrics:
+prosperity.metrics_url
 ```
 
 ## Development
