@@ -18,7 +18,7 @@ gem "coffee-rails"
 gem "jquery-rails"
 
 group :development, :test do
-  gem "rspec-rails"
+  gem "rspec-rails", "2.99.0"
   gem "pry-debugger"
   gem "awesome_print"
 end
