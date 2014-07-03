@@ -16,7 +16,7 @@
       <%= link_to 'edit', edit_graph_path(graph) %>
     </div>
 
-    <%= render_graph graph, start_time: start_time, class: 'dashboard' %>
+    <%= render_graph graph, start_time: start_time, end_time: end_time, class: 'dashboard' %>
   </div>
 <% end %>
 

@@ -9,7 +9,7 @@ module Prosperity
     end
 
     def render_graph(graph, options = {})
-      path_opts = options.slice(:start_time)
+      path_opts = options.slice(:start_time, :end_time, :option, :period)
       path = case graph
       when Graph
         graph_path(graph, path_opts)
