@@ -45,7 +45,7 @@ You can add custom scopes like so:
 class UsersMetric < Prosperity::Metric
   scope { User }
 
-  options 'active' do |scope|
+  option 'active' do |scope|
     scope.where(state: 'active')
   end
 end
