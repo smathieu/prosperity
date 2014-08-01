@@ -1,5 +1,7 @@
 module Prosperity
-  class ApplicationController < ActionController::Base
+  class ApplicationController < ::Prosperity.parent_controller.constantize
+    layout 'prosperity/application'
+
     protected
     def set_error(model)
       flash[:error] = model.errors.full_messages.to_sentence
