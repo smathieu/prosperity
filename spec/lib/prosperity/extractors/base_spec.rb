@@ -12,22 +12,22 @@ module Prosperity
     context "Month period" do
       let(:period) { Periods::MONTH }
 
-      it { subject.start_time.to_i.should == Time.new(1981, 7, 1).to_i }
-      it { subject.end_time.to_i.should == Time.new(2012, 7, 31, 23, 59, 59).to_i }
+      it { expect(subject.start_time.to_i).to eq(Time.new(1981, 7, 1).to_i) }
+      it { expect(subject.end_time.to_i).to eq(Time.new(2012, 7, 31, 23, 59, 59).to_i) }
     end
 
     context "Week period" do
       let(:period) { Periods::WEEK }
 
-      it { subject.start_time.to_i.should == Time.new(1981, 7, 6).to_i }
-      it { subject.end_time.to_i.should == Time.new(2012, 7, 15, 23, 59, 59).to_i }
+      it { expect(subject.start_time.to_i).to eq(Time.new(1981, 7, 6).to_i) }
+      it { expect(subject.end_time.to_i).to eq(Time.new(2012, 7, 15, 23, 59, 59).to_i) }
     end
 
     context "Day period" do
       let(:period) { Periods::DAY }
 
-      it { subject.start_time.to_i.should == Time.new(1981, 7, 10, 0, 0, 0).to_i }
-      it { subject.end_time.to_i.should == Time.new(2012, 7, 10, 23, 59, 59).to_i }
+      it { expect(subject.start_time.to_i).to eq(Time.new(1981, 7, 10, 0, 0, 0).to_i) }
+      it { expect(subject.end_time.to_i).to eq(Time.new(2012, 7, 10, 23, 59, 59).to_i) }
     end
   end
 end

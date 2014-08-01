@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 module Prosperity
-  describe GraphLine do
+  describe GraphLine, type: :model do
   end
 end

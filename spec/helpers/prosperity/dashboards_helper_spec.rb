@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 module Prosperity
-  describe DashboardsHelper do
+  describe DashboardsHelper, type: :helper do
   end
 end

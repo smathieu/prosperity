@@ -25,12 +25,12 @@ module Prosperity
     context "simple scope" do
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "returns the counts at it increases" do
-          data[0].should == 1
-          data[-1].should == 2
+          expect(data[0]).to eq(1)
+          expect(data[-1]).to eq(2)
         end
       end
     end
@@ -40,12 +40,12 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "returns the counts at it increases" do
-          data[0].should == 1
-          data[-1].should == 2
+          expect(data[0]).to eq(1)
+          expect(data[-1]).to eq(2)
         end
       end
     end
@@ -55,7 +55,7 @@ module Prosperity
 
       describe "#to_a" do
         it "only returns the results for that option block" do
-          data.all?(&:zero?).should be_true          
+          expect(data.all?(&:zero?)).to be_truthy          
         end
       end
     end
@@ -71,7 +71,7 @@ module Prosperity
 
       describe "#to_a" do
         it "delegates to the ruby block" do
-          data.should == [10] * expected_data_size
+          expect(data).to eq([10] * expected_data_size)
         end
       end
     end

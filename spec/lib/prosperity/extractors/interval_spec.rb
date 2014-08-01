@@ -25,11 +25,11 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "only returns models from that period" do
-          data.sum.should == 2
+          expect(data.sum).to eq(2)
         end
       end
     end
@@ -39,11 +39,11 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "only returns models from that period" do
-          data.sum.should == 2
+          expect(data.sum).to eq(2)
         end
       end
 
@@ -52,11 +52,11 @@ module Prosperity
 
         describe "#to_a" do
           it "returns the one entry per period" do
-            [54, 53].should include(data.size)
+            expect([54, 53]).to include(data.size)
           end
 
           it "only returns models from that period" do
-            data.sum.should == 2
+            expect(data.sum).to eq(2)
           end
         end
 
@@ -66,11 +66,11 @@ module Prosperity
 
           describe "#to_a" do
             it "returns the one entry per period" do
-              data.size.should == 4
+              expect(data.size).to eq(4)
             end
 
             it "only returns models from that period" do
-              data.sum.should == 1
+              expect(data.sum).to eq(1)
             end
           end
         end
@@ -86,11 +86,11 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "only returns models from that period" do
-          data.sum.should == 2
+          expect(data.sum).to eq(2)
         end
       end
     end
@@ -111,8 +111,8 @@ module Prosperity
 
         describe "#to_a" do
           it "returns the one entry per period" do
-            data.size.should == expected_data_size
-            data[-2].should == User.all.sum(:value)
+            expect(data.size).to eq(expected_data_size)
+            expect(data[-2]).to eq(User.all.sum(:value))
           end
         end
       end
@@ -127,8 +127,8 @@ module Prosperity
 
         describe "#to_a" do
           it "returns the one entry per period" do
-            data.size.should == expected_data_size
-            data[-2].should == User.all.sum(:value)
+            expect(data.size).to eq(expected_data_size)
+            expect(data[-2]).to eq(User.all.sum(:value))
           end
         end
       end
@@ -144,7 +144,7 @@ module Prosperity
 
         describe "#to_a" do
           it "delegates to the ruby block" do
-            data.should == [0] * expected_data_size
+            expect(data).to eq([0] * expected_data_size)
           end
         end
       end
