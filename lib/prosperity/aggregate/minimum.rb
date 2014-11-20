@@ -4,7 +4,7 @@ module Prosperity
       "MIN(#{column})"
     end
 
-    def apply(scope)
+    def apply(scope, options = {})
       scope.minimum(column)
     end
   end

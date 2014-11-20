@@ -13,7 +13,8 @@ module Prosperity
         elsif metric.ruby?
           data << metric.value_at.call(start_time, period)
         else
-          data << metric.aggregate.apply(scope.where("#{metric.group_by} < ?", start_time))
+          s = scope.where("#{metric.group_by} < ?", start_time)
+          data << metric.aggregate.apply(s)
         end
       end
 

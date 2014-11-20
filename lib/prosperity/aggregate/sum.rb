@@ -4,7 +4,7 @@ module Prosperity
       "SUM(#{column})"
     end
 
-    def apply(scope)
+    def apply(scope, options = {})
       scope.sum(column)
     end
   end

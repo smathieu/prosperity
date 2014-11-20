@@ -4,7 +4,7 @@ module Prosperity
       "MAX(#{column})"
     end
 
-    def apply(scope)
+    def apply(scope, options = {})
       scope.maximum(column)
     end
   end

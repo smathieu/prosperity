@@ -4,7 +4,7 @@ module Prosperity
       "AVG(#{column})"
     end
 
-    def apply(scope)
+    def apply(scope, options = {})
       scope.average(column)
     end
   end

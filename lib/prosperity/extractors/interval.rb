@@ -31,8 +31,9 @@ module Prosperity
         return data
       else
         s = scope.where("#{metric.group_by} BETWEEN ? AND ?", @start_time, @end_time)
-        s = s.group("to_char(#{metric.group_by}, '#{period.db_strf_str}')")
-        s = aggregate.apply(s)
+        group_by_sql = "to_char(#{metric.group_by}, '#{period.db_strf_str}')"
+        s = s.group(group_by_sql)
+        s = aggregate.apply(s, group_by_sql: group_by_sql)
       end
 
 

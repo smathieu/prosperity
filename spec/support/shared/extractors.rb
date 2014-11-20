@@ -25,7 +25,7 @@ shared_examples "an extractor" do
       end
     end
 
-    context "a sql metric with default aggregat" do
+    context "a sql metric with default aggregate" do
       let(:metric) do
         Class.new(Prosperity::Metric) do
           if type == 'sql'
@@ -57,6 +57,22 @@ shared_examples "an extractor" do
     describe "#to_a" do
       let(:data) { subject.to_a }
       it "returns the one entry per period" do
+        data.size.should == expected_data_size
+      end
+    end
+  end
+
+  context "a normal metric with a sql aggregate" do
+    let(:metric) do
+      Class.new(Prosperity::Metric) do
+        scope { User }
+        group_by "created_at"
+        aggregate { "SUM(value)" }
+      end.new
+    end
+
+    describe "#to_a" do
+      it "returns the correct data" do
         data.size.should == expected_data_size
       end
     end

@@ -4,7 +4,7 @@ module Prosperity
       "COUNT(1)"
     end
 
-    def apply(scope)
+    def apply(scope, options = {})
       scope.count
     end
   end
