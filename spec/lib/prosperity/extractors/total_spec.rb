@@ -55,7 +55,7 @@ module Prosperity
 
       describe "#to_a" do
         it "only returns the results for that option block" do
-          expect(data.all?(&:zero?)).to be_truthy          
+          expect(data.all?(&:zero?)).to be(true)
         end
       end
     end

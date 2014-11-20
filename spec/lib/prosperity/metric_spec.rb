@@ -133,7 +133,7 @@ module Prosperity
 
       describe '#group_by' do
         subject { super().group_by }
-        it { is_expected.to eq('users.created_at') }
+        it { should == 'users.created_at' }
       end
     end
 
