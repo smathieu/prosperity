@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Prosperity
-  describe GraphsController do
+  describe GraphsController, type: :controller do
     routes { Prosperity::Engine.routes }
 
     let(:valid_attributes) do
@@ -35,16 +35,16 @@ module Prosperity
     describe "GET 'new'" do
       it "returns http success" do
         get 'new'
-        response.should be_success
-        assigns(:graph).should be_a(Graph)
+        expect(response).to be_success
+        expect(assigns(:graph)).to be_a(Graph)
       end
     end
 
     describe "GET 'edit'" do
       it "returns http success" do
         get 'edit', id: graph.id
-        response.should be_success
-        assigns(:graph).should == graph
+        expect(response).to be_success
+        expect(assigns(:graph)).to eq(graph)
       end
     end
 
@@ -52,40 +52,40 @@ module Prosperity
       context "in JSON" do
         it "renders the JSON representation of the graph" do
           get :show, id: graph.id, format: 'json'
-          response.should be_success
-          json['title'].should == graph.title
-          json['extractors'].should == []
+          expect(response).to be_success
+          expect(json['title']).to eq(graph.title)
+          expect(json['extractors']).to eq([])
         end
 
         it "returns one extractor per graph line" do
           get :show, id: graph_w_line, format: 'json'
-          response.should be_success
-          json['extractors'].count.should == 1
+          expect(response).to be_success
+          expect(json['extractors'].count).to eq(1)
           ext = json['extractors'].first
-          ext['key'].should == valid_line_attributes[:extractor]
-          ext['url'].should be_present
+          expect(ext['key']).to eq(valid_line_attributes[:extractor])
+          expect(ext['url']).to be_present
         end
       end
 
       context "as embedabble HTML" do
         before do
           get :show, id: graph.id, format: 'html'
-          response.should be_success
+          expect(response).to be_success
         end
 
         it "renders html" do
-          response.content_type.should == 'text/html'
-          response.body.should include('metric dashboard')
+          expect(response.content_type).to eq('text/html')
+          expect(response.body).to include('metric dashboard')
         end
 
         it "should render the embedabble layout" do
-          response.body.should_not include('navbar')
+          expect(response.body).not_to include('navbar')
         end
 
         it "404 with custom page when graph is not found" do
           get :show, id: :unknown_id, format: 'html'
-          response.status.should == 404
-          response.body.should include("No such graph")
+          expect(response.status).to eq(404)
+          expect(response.body).to include("No such graph")
         end
       end
     end
@@ -96,13 +96,13 @@ module Prosperity
           post :create, graph: valid_attributes
         end.to change(Graph, :count).by(1)
         graph = assigns(:graph)
-        response.should redirect_to(edit_graph_path(graph))
+        expect(response).to redirect_to(edit_graph_path(graph))
       end
 
       it "handles invalid attributes" do
         post :create, graph: invalid_attributes
-        response.should be_success
-        flash[:error].should be_present
+        expect(response).to be_success
+        expect(flash[:error]).to be_present
       end
     end
 
@@ -117,8 +117,8 @@ module Prosperity
 
       it "Add the graph line" do
         put :update, id: graph.id, graph: update_attrs
-        response.should be_redirect
-        graph.reload.graph_lines.size.should == 1
+        expect(response).to be_redirect
+        expect(graph.reload.graph_lines.size).to eq(1)
       end
 
       let(:line) { graph_w_line.graph_lines.first }
@@ -136,10 +136,10 @@ module Prosperity
 
       it "updates an existing line" do
         put :update, id: graph_w_line.id, graph: update_line_attrs
-        response.should be_redirect
+        expect(response).to be_redirect
         line = graph_w_line.reload.graph_lines.first
-        line.option.should == 'new_option'
-        line.extractor.should == 'interval'
+        expect(line.option).to eq('new_option')
+        expect(line.extractor).to eq('interval')
       end
 
       let(:destroy_line_attrs) do
@@ -155,8 +155,8 @@ module Prosperity
 
       it "can destroy an existing line" do
         put :update, id: graph_w_line.id, graph: destroy_line_attrs
-        response.should be_redirect
-        GraphLine.find_by(id: line.id).should be_nil
+        expect(response).to be_redirect
+        expect(GraphLine.find_by(id: line.id)).to be_nil
       end
 
       it "updates an existing line while ignoring blank ones" do
@@ -178,9 +178,9 @@ module Prosperity
         }
 
         put :update, id: graph.id, graph: attrs
-        response.should be_redirect
-        line.reload.extractor.should == 'interval'
-        graph.reload.graph_lines.count.should == 1
+        expect(response).to be_redirect
+        expect(line.reload.extractor).to eq('interval')
+        expect(graph.reload.graph_lines.count).to eq(1)
       end
     end
   end

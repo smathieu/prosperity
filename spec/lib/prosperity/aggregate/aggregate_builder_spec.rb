@@ -11,7 +11,7 @@ module Prosperity
         end
 
         it "returns a Aggregate::Count" do
-          subject.should be_an(Aggregate::Count)
+          expect(subject).to be_an(Aggregate::Count)
         end
       end
 
@@ -31,8 +31,8 @@ module Prosperity
           end
 
           it "returns a #{type}" do
-            subject.should be_an(type)
-            subject.column.should == :some_column
+            expect(subject).to be_an(type)
+            expect(subject.column).to eq(:some_column)
           end
         end
       end
@@ -46,8 +46,8 @@ module Prosperity
       end
 
       it "returns a SQL type" do
-        subject.should be_an(Aggregate::Sql)
-        subject.to_sql.should == 'SUM(value)'
+        expect(subject).to be_an(Aggregate::Sql)
+        expect(subject.to_sql).to eq('SUM(value)')
       end
     end
     
@@ -57,8 +57,8 @@ module Prosperity
       end
 
       it "returns a SQL type" do
-        subject.should be_an(Aggregate::Sql)
-        subject.to_sql.should == 'SUM(value)'
+        expect(subject).to be_an(Aggregate::Sql)
+        expect(subject.to_sql).to eq('SUM(value)')
       end
     end
   end

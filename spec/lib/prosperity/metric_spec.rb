@@ -10,19 +10,19 @@ module Prosperity
       end
 
       it "groups by created_at by default" do
-        subject.group_by.should == :created_at
+        expect(subject.group_by).to eq(:created_at)
       end
 
       it "gets the scope" do
-        subject.scope.should == User
+        expect(subject.scope).to eq(User)
       end
 
       it "should not be sql" do
-        subject.should_not be_sql
+        expect(subject).not_to be_sql
       end
 
       it "should have the default aggregate" do
-        subject.aggregate.should be_an(Aggregate::Count)
+        expect(subject.aggregate).to be_an(Aggregate::Count)
       end
     end
 
@@ -35,11 +35,11 @@ module Prosperity
         end
 
         it "groups by created_at by default" do
-          subject.group_by.should == :created_at
+          expect(subject.group_by).to eq(:created_at)
         end
 
         it "gets the scope" do
-          subject.sql.should == "SELECT name, created_at FROM users"
+          expect(subject.sql).to eq("SELECT name, created_at FROM users")
         end
 
         it "raises an exception when adding an option" do
@@ -51,7 +51,7 @@ module Prosperity
         end
 
         it "should be sql" do
-          subject.should be_sql
+          expect(subject).to be_sql
         end
       end
 
@@ -63,11 +63,11 @@ module Prosperity
         end
 
         it "groups by created_at by default" do
-          subject.group_by.should == :created_at
+          expect(subject.group_by).to eq(:created_at)
         end
 
         it "gets the scope" do
-          subject.sql.should == "SELECT name, created_at FROM users"
+          expect(subject.sql).to eq("SELECT name, created_at FROM users")
         end
 
         it "raises an exception when adding an option" do
@@ -79,7 +79,7 @@ module Prosperity
         end
 
         it "should be sql" do
-          subject.should be_sql
+          expect(subject).to be_sql
         end
       end
     end
@@ -117,9 +117,9 @@ module Prosperity
       end
 
       it "should have multiple options" do
-        subject.options.size.should == 2
-        subject.options['default'].should be_present
-        subject.options['active'].should be_present
+        expect(subject.options.size).to eq(2)
+        expect(subject.options['default']).to be_present
+        expect(subject.options['active']).to be_present
       end
     end
 
@@ -131,7 +131,10 @@ module Prosperity
         end.new
       end
 
-      its(:group_by) { should == 'users.created_at' }
+      describe '#group_by' do
+        subject { super().group_by }
+        it { is_expected.to eq('users.created_at') }
+      end
     end
 
     context "A metric with a a sum aggregate" do
@@ -145,8 +148,8 @@ module Prosperity
       let(:aggregate) { subject.aggregate }
 
       it "has the correct aggregate info" do
-        aggregate.should be_an(Aggregate::Sum)
-        aggregate.column.should == :some_column
+        expect(aggregate).to be_an(Aggregate::Sum)
+        expect(aggregate.column).to eq(:some_column)
       end
     end
 
@@ -160,13 +163,13 @@ module Prosperity
       end
 
       it "has the correct value_at info" do
-        subject.value_at.call.should == :expected
+        expect(subject.value_at.call).to eq(:expected)
       end
 
       describe ".ruby?" do
         it "should be true" do
-          subject.class.ruby?.should == true
-          subject.ruby?.should == true
+          expect(subject.class.ruby?).to eq(true)
+          expect(subject.ruby?).to eq(true)
         end
       end
     end

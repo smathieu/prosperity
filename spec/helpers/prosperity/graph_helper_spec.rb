@@ -1,6 +1,6 @@
 require 'spec_helper'
 
 module Prosperity
-  describe GraphHelper do
+  describe GraphHelper, type: :helper do
   end
 end

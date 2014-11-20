@@ -25,13 +25,13 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "the value shows the percentage change since the last period" do
-          data[6].should == 0.0
-          data[-3].should == 100.0
-          data[-2].should == 50.0
+          expect(data[6]).to eq(0.0)
+          expect(data[-3]).to eq(100.0)
+          expect(data[-2]).to eq(50.0)
         end
       end
     end
@@ -41,13 +41,13 @@ module Prosperity
 
       describe "#to_a" do
         it "returns the one entry per period" do
-          data.size.should == expected_data_size
+          expect(data.size).to eq(expected_data_size)
         end
 
         it "the value shows the percentage change since the last period" do
-          data[6].should == 0.0
-          data[-3].should == 100.0
-          data[-2].should == 50.0
+          expect(data[6]).to eq(0.0)
+          expect(data[-3]).to eq(100.0)
+          expect(data[-2]).to eq(50.0)
         end
       end
     end
@@ -63,7 +63,7 @@ module Prosperity
 
       describe "#to_a" do
         it "delegates to the ruby block" do
-          data.should == [0.0] * expected_data_size
+          expect(data).to eq([0.0] * expected_data_size)
         end
       end
     end
