@@ -6,7 +6,7 @@ Prosperity easily lets you add a dashboard of arbitrary time series data to your
 
 This is still a work in progress, but it should already make it much easier to create dashboard withing your Rails app. Currently only tested with PostgreSQL, but should be easily portable to other DBs.
 
-![Screenshot](https://raw2.github.com/smathieu/prosperity/master/doc/screenshot.png "Prosperity")
+![Screenshot](https://raw.githubusercontent.com/smathieu/prosperity/master/doc/screenshot.png "Prosperity")
 
 ## Install
 
