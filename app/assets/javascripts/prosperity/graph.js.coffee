@@ -76,7 +76,10 @@ class SubGraph
       for key, value of item
         sum += value unless key == 'x'
       for key, value of item
-        item[key] = (value / sum) * 100 unless key == 'x'
+        if sum == 0
+          item[key] = 50 unless key == 'x'
+        else
+          item[key] = (value / sum) * 100 unless key == 'x'
 
 class Graph
   constructor: (options) ->
