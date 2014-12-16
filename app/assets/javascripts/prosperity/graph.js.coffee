@@ -77,7 +77,7 @@ class SubGraph
         sum += value unless key == 'x'
       for key, value of item
         if sum == 0
-          item[key] = 50 unless key == 'x'
+          item[key] = 100 / item.length unless key == 'x'
         else
           item[key] = (value / sum) * 100 unless key == 'x'
 
