@@ -66,7 +66,17 @@ class SubGraph
     # Because of a bug in Morris (https://github.com/morrisjs/morris.js/issues/388) 
     # it's not possible to add data on a hidden element. We just redraw the
     # entire thing in the meantime.
+    if @graphType == 'ratio'
+      @calculateRatios()
     @chart = new @class()(@chartOptions)
+
+  calculateRatios: ->
+    for item, index in @data
+      sum = 0
+      for key, value of item
+        sum += value unless key == 'x'
+      for key, value of item
+        item[key] = (value / sum) * 100 unless key == 'x'
 
 class Graph
   constructor: (options) ->
