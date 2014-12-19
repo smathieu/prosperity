@@ -68,7 +68,7 @@ class SubGraph
     # entire thing in the meantime.
     if @graphType == 'ratio'
       @calculateRatios()
-      #return
+
     @chart = new @class()(@chartOptions)
 
   calculateRatios: ->
