@@ -57,7 +57,7 @@ class SubGraph
     @el
 
   class: =>
-    if @graphType == 'area'
+    if ['area', 'ratio'].indexOf(@graphType) >= 0
       Morris.Area
     else
       Morris.Line
@@ -68,6 +68,7 @@ class SubGraph
     # entire thing in the meantime.
     if @graphType == 'ratio'
       @calculateRatios()
+      #return
     @chart = new @class()(@chartOptions)
 
   calculateRatios: ->
@@ -77,7 +78,7 @@ class SubGraph
         sum += value unless key == 'x'
       for key, value of item
         if sum == 0
-          item[key] = 100 / item.length unless key == 'x'
+          item[key] = 0 unless key == 'x'
         else
           item[key] = (value / sum) * 100 unless key == 'x'
 
