@@ -8,7 +8,7 @@ module Prosperity
 
     attr_accessible *ATTR_ACCESSIBLE unless defined?(ActionController::StrongParameters)
 
-    VALID_GRAPH_TYPES = %w(line area)
+    VALID_GRAPH_TYPES = %w(line area ratio)
     validates :graph_type, inclusion: {in: VALID_GRAPH_TYPES}
 
     private
