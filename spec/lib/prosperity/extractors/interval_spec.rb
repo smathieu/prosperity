@@ -52,7 +52,7 @@ module Prosperity
 
         describe "#to_a" do
           it "returns the one entry per period" do
-            expect([54, 53]).to include(data.size)
+            expect([55, 53]).to include(data.size)
           end
 
           it "only returns models from that period" do
